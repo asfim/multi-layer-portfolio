@@ -207,6 +207,57 @@
     </div>
 </section>
 
+<!-- Certificates Section -->
+<section id="certificates" class="py-5 bg-white">
+    <div class="container py-5">
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h6 class="text-uppercase fw-bold" style="color: #0d9488;">Credentials</h6>
+            <h2 class="fw-extrabold text-dark">Medical Board Certifications</h2>
+        </div>
+        <div class="row g-4 justify-content-center">
+            @foreach($certificates as $cert)
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="p-4 rounded-4 border bg-light h-100 shadow-sm text-center">
+                        <i class="fa-solid fa-certificate fa-3x mb-3" style="color: #0d9488;"></i>
+                        <h5 class="fw-bold text-dark mb-2">{{ $cert->title }}</h5>
+                        <h6 class="text-secondary small mb-2">{{ $cert->issuer }}</h6>
+                        <span class="badge bg-white text-dark border mb-3">{{ $cert->issue_date }}</span>
+                        @if($cert->verification_url)
+                            <div class="mt-2">
+                                <a href="{{ $cert->verification_url }}" target="_blank" class="btn btn-sm btn-outline-dark rounded-pill">Verify Credential</a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section id="blog" class="py-5" style="background: #f0fdf4;">
+    <div class="container py-5">
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h6 class="text-uppercase fw-bold" style="color: #0d9488;">Health Insights</h6>
+            <h2 class="fw-extrabold text-dark">Medical Articles</h2>
+        </div>
+        <div class="row g-4">
+            @foreach($recentBlogs as $blog)
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="bg-white rounded-4 shadow-sm border overflow-hidden h-100 d-flex flex-column">
+                        <img src="{{ $blog->cover_image }}" class="w-100" style="height: 200px; object-fit: cover;" alt="{{ $blog->title }}">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="small fw-bold mb-2" style="color: #0d9488;">{{ $blog->created_at->format('M d, Y') }}</span>
+                            <h5 class="fw-bold text-dark mb-3">{{ Str::limit($blog->title, 50) }}</h5>
+                            <p class="text-secondary small flex-grow-1">{{ Str::limit(strip_tags($blog->content), 100) }}</p>
+                            <a href="#" class="text-decoration-none fw-bold mt-3" style="color: #0d9488;">Read Article <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
 <!-- Contact & Appointment -->
 <section id="contact" class="py-5 bg-white">
     <div class="container py-5">
