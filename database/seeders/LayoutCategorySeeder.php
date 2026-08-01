@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\BlogCategory;
 use App\Models\ProjectCategory;
+use App\Models\SkillCategory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -56,6 +57,26 @@ class LayoutCategorySeeder extends Seeder
                 'name' => $category,
             ], [
                 'slug' => Str::slug($category),
+            ]);
+        }
+
+        // Skill Categories
+        $skillCategories = [
+            'Frontend Development',
+            'Backend Development',
+            'Tools & Technologies',
+            'Soft Skills',
+            'Medical Expertise',
+            'Patient Care',
+            'Legal Analysis',
+            'Civil Engineering',
+            'Design & Creative',
+            'Architecture'
+        ];
+
+        foreach ($skillCategories as $category) {
+            SkillCategory::firstOrCreate([
+                'name' => $category,
             ]);
         }
     }

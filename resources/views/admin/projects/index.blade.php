@@ -52,16 +52,18 @@
                             @endif
                         </td>
                         <td class="text-end">
-                            <button class="btn btn-sm btn-outline-primary rounded-3 me-1" data-bs-toggle="modal" data-bs-target="#editProjectModal{{ $project->id }}">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" onclick="return confirm('Delete this project?')">
-                                    <i class="fa-solid fa-trash"></i>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button class="btn btn-sm btn-outline-primary rounded-3" data-bs-toggle="modal" data-bs-target="#editProjectModal{{ $project->id }}">
+                                    <i class="fa-solid fa-pen"></i>
                                 </button>
-                            </form>
+                                <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="m-0">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-3" onclick="return confirm('Delete this project?')">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
 
