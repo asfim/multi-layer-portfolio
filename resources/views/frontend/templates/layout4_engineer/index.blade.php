@@ -1,20 +1,132 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+<!-- Custom Styles for ShakerTech Vibe -->
+<style>
+    :root {
+        --st-bg: #030014;
+        --st-bg-glass: rgba(10, 10, 25, 0.7);
+        --st-primary: #00d2ff;
+        --st-secondary: #9b51e0;
+        --st-text: #e2e8f0;
+        --st-text-muted: #94a3b8;
+        --st-grad: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #9b51e0 100%);
+        --st-glow: 0 0 20px rgba(0, 210, 255, 0.3);
+    }
+    
+    body {
+        background-color: var(--st-bg);
+        color: var(--st-text);
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* Gradient Text */
+    .text-gradient {
+        background: var(--st-grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Glowing Buttons */
+    .btn-glow {
+        background: var(--st-grad);
+        color: white;
+        border: none;
+        box-shadow: var(--st-glow);
+        transition: all 0.3s ease;
+    }
+    .btn-glow:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(155, 81, 224, 0.6);
+        color: white;
+    }
+
+    /* Glass Cards */
+    .glass-card {
+        background: var(--st-bg-glass);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        transition: all 0.3s ease;
+    }
+    .glass-card:hover {
+        border-color: rgba(0, 210, 255, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(155, 81, 224, 0.1);
+        transform: translateY(-5px);
+    }
+
+    /* Hero Background Code Animation Removed */
+
+    /* Navbar */
+    .navbar-st {
+        background: rgba(3, 0, 20, 0.8) !important;
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .nav-link-st {
+        color: var(--st-text-muted) !important;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+    .nav-link-st:hover {
+        color: var(--st-primary) !important;
+        text-shadow: var(--st-glow);
+    }
+
+    /* Services Expanding Panels equivalent (Grid) */
+    .service-panel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        height: 250px;
+        display: flex;
+        align-items: flex-end;
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: 0.4s;
+    }
+    .service-panel::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(to top, rgba(3,0,20,1) 0%, rgba(3,0,20,0.2) 100%);
+        z-index: 1;
+    }
+    .service-panel:hover {
+        border-color: var(--st-primary);
+        box-shadow: 0 0 25px rgba(0, 210, 255, 0.2);
+    }
+    .service-panel-content {
+        position: relative;
+        z-index: 2;
+        padding: 2rem;
+        width: 100%;
+    }
+    
+    .floating-icon {
+        animation: floatIcon 4s ease-in-out infinite;
+    }
+    @keyframes floatIcon {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+</style>
+
 <!-- Engineering Header -->
-<nav class="navbar navbar-expand-lg fixed-top bg-black py-3 px-4 border-bottom border-secondary">
+<nav class="navbar navbar-expand-lg fixed-top navbar-st py-3 px-4">
     <div class="container">
-        <a class="navbar-brand fw-extrabold fs-4 font-monospace text-info" href="#">
-            <i class="fa-solid fa-microchip me-2"></i> >_{{ $portfolio->full_name }}
+        <a class="navbar-brand fw-extrabold fs-4 text-white" href="#">
+            <i class="fa-solid fa-code" style="color: var(--st-primary);"></i> <span class="ms-1">{{ $portfolio->full_name }}</span>
         </a>
-        <button class="navbar-toggler border-secondary rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <i class="fa-solid fa-bars text-info"></i>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <i class="fa-solid fa-bars text-white"></i>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto gap-3 font-monospace">
+            <ul class="navbar-nav ms-auto gap-3">
                 @foreach($sections as $sec)
                     <li class="nav-item">
-                        <a href="#{{ $sec->key }}" class="nav-link text-white-50 hover-info text-uppercase" style="transition: 0.2s;" onmouseover="this.classList.add('text-info');this.classList.remove('text-white-50');" onmouseout="this.classList.add('text-white-50');this.classList.remove('text-info');">[ {{ $sec->name }} ]</a>
+                        <a href="#{{ $sec->key }}" class="nav-link nav-link-st text-uppercase">{{ $sec->name }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -23,106 +135,111 @@
 </nav>
 
 <!-- Hero -->
-<section id="hero" class="min-vh-100 d-flex align-items-center bg-dark text-white pt-5">
-    <div class="container pt-5">
+<section id="hero" class="min-vh-100 d-flex align-items-center position-relative" style="padding-top: 100px;">
+    <!-- Background Code Animation Removed -->
+    
+    <div class="container position-relative" style="z-index: 2;">
         <div class="row align-items-center g-5">
-            <div class="col-lg-6" data-aos="fade-right">
-                <div class="badge bg-primary px-3 py-2 rounded-0 mb-3 font-monospace">ENGINEERING SPECIFICATIONS</div>
-                <h1 class="display-4 fw-extrabold mb-3">{{ $portfolio->full_name }}</h1>
-                <h4 class="text-info font-monospace mb-4">{{ $portfolio->profession }}</h4>
-                <p class="text-secondary leading-relaxed mb-4">{{ $portfolio->short_bio }}</p>
+            <div class="col-lg-7" data-aos="fade-right">
+                <div class="d-inline-block px-3 py-1 mb-4 rounded-pill" style="border: 1px solid rgba(155, 81, 224, 0.5); background: rgba(155, 81, 224, 0.1);">
+                    <span class="text-white small fw-semibold"><span style="color: var(--st-primary);">●</span> Elite Core Engineering</span>
+                </div>
+                <h1 class="display-3 fw-extrabold text-white mb-3">
+                    Engineering the <br>
+                    <span class="text-gradient">Future.</span>
+                </h1>
+                <p class="lead mb-4" style="color: var(--st-text-muted); max-width: 600px;">
+                    We transform complex challenges into robust physical infrastructure and mechanical systems. {{ $portfolio->short_bio }}
+                </p>
                 <div class="d-flex gap-3">
-                    <a href="#projects" class="btn btn-primary rounded-0 px-4 py-2 font-monospace">VIEW PROJECTS</a>
-                    <a href="#contact" class="btn btn-outline-info rounded-0 px-4 py-2 font-monospace">INITIATE CONTACT</a>
+                    <a href="#contact" class="btn btn-glow rounded-pill px-4 py-3 fw-bold">
+                        <i class="fa-solid fa-rocket me-2"></i> Start a Project
+                    </a>
+                    <a href="#services" class="btn btn-outline-light rounded-pill px-4 py-3 fw-bold" style="border-color: rgba(255,255,255,0.2);">
+                        Explore Services
+                    </a>
                 </div>
             </div>
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="border border-info p-4 font-monospace bg-black position-relative shadow-lg">
-                    <div class="position-absolute top-0 start-0 p-1 bg-info text-black fw-bold" style="font-size: 10px;">SYS_MONITOR</div>
-                    <h6 class="text-info border-bottom border-info pb-2 mt-3">[ SYSTEM DIAGNOSTIC METRICS ]</h6>
-                    <div class="d-flex justify-content-between py-2 border-bottom border-secondary">
-                        <span class="text-secondary">EXPERIENCE_YEARS:</span>
-                        <span class="text-warning">{{ $portfolio->years_of_experience }} YRS</span>
-                    </div>
-                    <div class="d-flex justify-content-between py-2 border-bottom border-secondary">
-                        <span class="text-secondary">COMPLETED_PROJECTS:</span>
-                        <span class="text-success">{{ $portfolio->completed_projects }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between py-2">
-                        <span class="text-secondary">SYSTEM_STATUS:</span>
-                        <span class="text-info">{{ $portfolio->availability }}</span>
-                    </div>
+            
+            <div class="col-lg-5" data-aos="fade-left">
+                <div class="position-relative text-center">
+                    <div class="position-absolute top-50 start-50 translate-middle w-100 h-100 rounded-circle" style="background: var(--st-grad); filter: blur(60px); opacity: 0.25; z-index: 0;"></div>
+                    <img src="{{ $portfolio->cover_image ?? 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800&auto=format&fit=crop' }}" class="img-fluid rounded-4 position-relative z-1 glass-card p-1" style="max-height: 500px; object-fit: cover;" alt="Core Engineering">
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Strip -->
+<section class="py-4" style="background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <h3 class="text-white fw-extrabold mb-0">{{ $portfolio->years_of_experience }}+ YRS</h3>
+                <p class="small mb-0 text-uppercase" style="color: var(--st-primary); letter-spacing: 2px;">Experience</p>
+            </div>
+            <div class="col-md-4">
+                <h3 class="text-white fw-extrabold mb-0">{{ $portfolio->completed_projects }}</h3>
+                <p class="small mb-0 text-uppercase" style="color: var(--st-secondary); letter-spacing: 2px;">Completed Projects</p>
+            </div>
+            <div class="col-md-4">
+                <h3 class="text-white fw-extrabold mb-0">{{ $portfolio->happy_clients }}</h3>
+                <p class="small mb-0 text-uppercase" style="color: #ff007f; letter-spacing: 2px;">Happy Clients</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- About Section -->
-<section id="about" class="py-5 bg-black text-white">
-    <div class="container py-5 border border-secondary p-4 p-md-5 bg-dark">
+<section id="about" class="py-5">
+    <div class="container py-5">
         <div class="row align-items-center g-5">
             <div class="col-lg-5" data-aos="fade-right">
-                <img src="{{ $portfolio->cover_image }}" class="img-fluid border border-info p-2" alt="Profile" style="width: 100%; object-fit: cover; max-height: 400px;">
+                <div class="position-relative">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 rounded-4" style="background: var(--st-grad); filter: blur(20px); opacity: 0.3; transform: scale(0.95);"></div>
+                    <img src="{{ $portfolio->cover_image }}" class="img-fluid rounded-4 position-relative z-1" alt="Profile" style="width: 100%; object-fit: cover; max-height: 500px; border: 1px solid rgba(255,255,255,0.1);">
+                </div>
             </div>
             <div class="col-lg-7" data-aos="fade-left">
-                <h6 class="text-info font-monospace mb-2">// CORE_ARCHITECTURE</h6>
-                <h2 class="fw-extrabold text-white mb-4">About the Engineer</h2>
-                <p class="text-secondary leading-relaxed mb-4 font-monospace">{{ $portfolio->about_me }}</p>
-                <div class="d-flex flex-wrap gap-4 mt-4 font-monospace">
-                    <div class="border border-secondary p-3 text-center bg-black">
-                        <h4 class="text-info mb-0">{{ $portfolio->years_of_experience }}+</h4>
-                        <small class="text-secondary">YRS_EXP</small>
-                    </div>
-                    <div class="border border-secondary p-3 text-center bg-black">
-                        <h4 class="text-info mb-0">{{ $portfolio->completed_projects }}</h4>
-                        <small class="text-secondary">DEPLOYMENTS</small>
-                    </div>
-                    <div class="border border-secondary p-3 text-center bg-black">
-                        <h4 class="text-info mb-0">{{ $portfolio->happy_clients }}</h4>
-                        <small class="text-secondary">CLIENT_NODES</small>
-                    </div>
-                </div>
+                <h6 class="text-uppercase fw-bold" style="color: var(--st-secondary); letter-spacing: 2px;">About Me</h6>
+                <h2 class="fw-extrabold text-white mb-4 display-6">Architecting <span class="text-gradient">Digital Solutions</span></h2>
+                <p class="leading-relaxed mb-4" style="color: var(--st-text-muted); font-size: 1.1rem;">{{ $portfolio->about_me }}</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Education Section -->
-<section id="education" class="py-5 bg-dark text-white">
+<!-- Education & Experience (Process Tree) -->
+<section id="education" class="py-5">
     <div class="container py-5">
-        <h2 class="fw-bold text-center text-info mb-5 font-monospace">// ACADEMIC_QUALIFICATIONS</h2>
-        <div class="row g-4">
-            @foreach($educations as $edu)
-                <div class="col-md-6" data-aos="fade-up">
-                    <div class="border border-secondary p-4 bg-black h-100 position-relative">
-                        <div class="position-absolute top-0 start-0 p-1 bg-secondary text-white font-monospace" style="font-size: 10px;">EDU_NODE_{{ $loop->iteration }}</div>
-                        <h5 class="fw-bold text-info font-monospace mt-3">{{ $edu->degree }}</h5>
-                        <h6 class="text-secondary mb-2">{{ $edu->institute }}</h6>
-                        <p class="text-white-50 font-monospace small mb-2">[{{ $edu->start_year }} - {{ $edu->end_year ?? 'PRESENT' }}]</p>
-                        <p class="text-success font-monospace small mb-2">RESULT: {{ $edu->result }}</p>
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h6 class="text-uppercase fw-bold" style="color: var(--st-primary); letter-spacing: 2px;">My Journey</h6>
+            <h2 class="fw-extrabold text-white display-6">From <span class="text-gradient">Learning</span> to <span class="text-gradient">Leading</span></h2>
+        </div>
+        
+        <div class="row g-5">
+            <div class="col-md-6" data-aos="fade-right">
+                <h4 class="text-white mb-4 fw-bold"><i class="fa-solid fa-graduation-cap me-2 text-gradient"></i> Education</h4>
+                @foreach($educations as $edu)
+                    <div class="glass-card p-4 mb-4 position-relative border-start border-4" style="border-left-color: var(--st-primary) !important;">
+                        <h5 class="fw-bold text-white mb-1">{{ $edu->degree }}</h5>
+                        <h6 class="mb-2" style="color: var(--st-text-muted);">{{ $edu->institute }}</h6>
+                        <span class="badge rounded-pill mb-2" style="background: rgba(0, 210, 255, 0.1); color: var(--st-primary); border: 1px solid rgba(0,210,255,0.2);">{{ $edu->start_year }} - {{ $edu->end_year ?? 'Present' }}</span>
                         @if($edu->description)
-                            <p class="text-secondary small mb-0">{{ $edu->description }}</p>
+                            <p class="small mb-0" style="color: var(--st-text-muted);">{{ $edu->description }}</p>
                         @endif
                     </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<!-- Experience Section -->
-<section id="experience" class="py-5 bg-black text-white">
-    <div class="container py-5 border border-secondary p-4 p-md-5 bg-dark">
-        <h2 class="fw-bold text-center text-info mb-5 font-monospace">// PROFESSIONAL_TIMELINE</h2>
-        <div class="row justify-content-center font-monospace">
-            <div class="col-lg-8">
+                @endforeach
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <h4 class="text-white mb-4 fw-bold"><i class="fa-solid fa-briefcase me-2 text-gradient"></i> Experience</h4>
                 @foreach($experiences as $exp)
-                    <div class="mb-4 border-start border-info ps-4 position-relative" data-aos="fade-up">
-                        <div class="position-absolute bg-info" style="width: 12px; height: 12px; left: -7px; top: 0;"></div>
-                        <h5 class="text-primary fw-bold mb-1">{{ $exp->designation }}</h5>
-                        <h6 class="text-white mb-2">{{ $exp->company }} <span class="text-secondary ms-2">[{{ $exp->start_date }} - {{ $exp->is_current ? 'PRESENT' : $exp->end_date }}]</span></h6>
-                        <p class="text-secondary small">{{ $exp->description }}</p>
+                    <div class="glass-card p-4 mb-4 position-relative border-start border-4" style="border-left-color: var(--st-secondary) !important;">
+                        <h5 class="fw-bold text-white mb-1">{{ $exp->designation }}</h5>
+                        <h6 class="mb-2" style="color: var(--st-text-muted);">{{ $exp->company }}</h6>
+                        <span class="badge rounded-pill mb-2" style="background: rgba(155, 81, 224, 0.1); color: var(--st-secondary); border: 1px solid rgba(155,81,224,0.2);">{{ $exp->start_date }} - {{ $exp->is_current ? 'Present' : $exp->end_date }}</span>
+                        <p class="small mb-0" style="color: var(--st-text-muted);">{{ $exp->description }}</p>
                     </div>
                 @endforeach
             </div>
@@ -131,22 +248,25 @@
 </section>
 
 <!-- Skills Section -->
-<section id="skills" class="py-5 bg-dark text-white">
+<section id="skills" class="py-5" style="background: rgba(255,255,255,0.02);">
     <div class="container py-5">
-        <h2 class="fw-bold text-center text-info mb-5 font-monospace">// TECHNICAL_STACK</h2>
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h6 class="text-uppercase fw-bold" style="color: var(--st-primary); letter-spacing: 2px;">Capabilities</h6>
+            <h2 class="fw-extrabold text-white display-6">Technical <span class="text-gradient">Arsenal</span></h2>
+        </div>
         <div class="row g-4">
             @foreach($skillCategories as $cat)
                 <div class="col-md-6" data-aos="fade-up">
-                    <div class="border border-secondary p-4 bg-black h-100 font-monospace">
-                        <h5 class="fw-bold text-info border-bottom border-secondary pb-2 mb-4">[{{ $cat->name }}]</h5>
+                    <div class="glass-card p-5 h-100">
+                        <h4 class="fw-bold text-white mb-4 border-bottom border-secondary pb-3" style="border-color: rgba(255,255,255,0.1) !important;">{{ $cat->name }}</h4>
                         @foreach($cat->skills as $skill)
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between mb-1">
-                                    <span class="text-secondary small">{{ $skill->name }}</span>
-                                    <span class="text-success small">{{ $skill->proficiency }}%</span>
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="fw-semibold text-white">{{ $skill->name }}</span>
+                                    <span class="fw-bold" style="color: var(--st-primary);">{{ $skill->proficiency }}%</span>
                                 </div>
-                                <div class="progress rounded-0 bg-dark border border-secondary" style="height: 8px;">
-                                    <div class="progress-bar bg-info" style="width: {{ $skill->proficiency }}%;"></div>
+                                <div class="progress rounded-pill bg-dark" style="height: 8px;">
+                                    <div class="progress-bar" style="width: {{ $skill->proficiency }}%; background: var(--st-grad); box-shadow: var(--st-glow);"></div>
                                 </div>
                             </div>
                         @endforeach
@@ -158,16 +278,87 @@
 </section>
 
 <!-- Services Section -->
-<section id="services" class="py-5 bg-black text-white">
-    <div class="container py-5 border border-secondary p-4 p-md-5 bg-dark">
-        <h2 class="fw-bold text-center text-info mb-5 font-monospace">// SYSTEM_CAPABILITIES</h2>
+<section id="services" class="py-5">
+    <div class="container py-5">
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h6 class="text-uppercase fw-bold" style="color: var(--st-secondary); letter-spacing: 2px;">What We Do</h6>
+            <h2 class="fw-extrabold text-white display-6">Core <span class="text-gradient">Services</span></h2>
+        </div>
         <div class="row g-4">
-            @foreach($services as $svc)
-                <div class="col-md-4" data-aos="fade-up">
-                    <div class="border border-secondary p-4 bg-black text-center h-100 hover-border-info transition-all">
-                        <i class="{{ $svc->icon ?? 'fa-solid fa-microchip' }} fa-2x text-info mb-3"></i>
-                        <h5 class="fw-bold text-white font-monospace mb-3">{{ $svc->title }}</h5>
-                        <p class="text-secondary small">{{ $svc->short_description }}</p>
+            @forelse($services as $svc)
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="service-panel glass-card">
+                        <div class="service-panel-content">
+                            <i class="{{ $svc->icon ?? 'fa-solid fa-tools' }} fa-2x mb-3" style="color: var(--st-primary);"></i>
+                            <h4 class="fw-bold text-white mb-2">{{ $svc->title }}</h4>
+                            <p class="small mb-0" style="color: var(--st-text-muted);">{{ $svc->short_description }}</p>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="service-panel glass-card">
+                        <div class="service-panel-content">
+                            <i class="fa-solid fa-building fa-2x mb-3" style="color: var(--st-primary);"></i>
+                            <h4 class="fw-bold text-white mb-2">Civil Engineering</h4>
+                            <p class="small mb-0" style="color: var(--st-text-muted);">Structural design, analysis, and construction management for sustainable infrastructure.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="service-panel glass-card">
+                        <div class="service-panel-content">
+                            <i class="fa-solid fa-cogs fa-2x mb-3" style="color: var(--st-secondary);"></i>
+                            <h4 class="fw-bold text-white mb-2">Mechanical Engineering</h4>
+                            <p class="small mb-0" style="color: var(--st-text-muted);">Machine design, HVAC systems, and dynamic mechanical solutions for industrial applications.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="service-panel glass-card">
+                        <div class="service-panel-content">
+                            <i class="fa-solid fa-bolt fa-2x mb-3" style="color: #ff007f;"></i>
+                            <h4 class="fw-bold text-white mb-2">Electrical Engineering</h4>
+                            <p class="small mb-0" style="color: var(--st-text-muted);">Power generation, transmission grids, and advanced electrical system design.</p>
+                        </div>
+                    </div>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="py-5" style="background: rgba(255,255,255,0.02);">
+    <div class="container py-5">
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h6 class="text-uppercase fw-bold" style="color: var(--st-primary); letter-spacing: 2px;">Portfolio</h6>
+            <h2 class="fw-extrabold text-white display-6">Featured <span class="text-gradient">Deployments</span></h2>
+        </div>
+        <div class="row g-4">
+            @foreach($projects as $proj)
+                <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                    <div class="glass-card overflow-hidden h-100 d-flex flex-column group">
+                        <div class="position-relative overflow-hidden">
+                            <img src="{{ $proj->cover_image }}" class="w-100 transition-all" style="height: 220px; object-fit: cover; transition: transform 0.5s;" alt="{{ $proj->title }}" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                            <div class="position-absolute top-0 end-0 m-3">
+                                <span class="badge rounded-pill px-3 py-2" style="background: rgba(3,0,20,0.8); border: 1px solid rgba(255,255,255,0.1); color: var(--st-primary);">{{ $proj->category->name ?? 'Project' }}</span>
+                            </div>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <h4 class="fw-bold text-white mb-2">{{ $proj->title }}</h4>
+                            <p class="small flex-grow-1" style="color: var(--st-text-muted);">{{ $proj->short_description }}</p>
+                            @if($proj->live_url || $proj->github_url)
+                                <div class="d-flex gap-2 mt-3 pt-3 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
+                                    @if($proj->live_url)
+                                        <a href="{{ $proj->live_url }}" target="_blank" class="btn btn-sm btn-glow rounded-pill px-3">Live Demo</a>
+                                    @endif
+                                    @if($proj->github_url)
+                                        <a href="{{ $proj->github_url }}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3" style="border-color: rgba(255,255,255,0.2);">Source <i class="fa-brands fa-github ms-1"></i></a>
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             @endforeach
@@ -175,20 +366,26 @@
     </div>
 </section>
 
-<!-- Projects -->
-<section id="projects" class="py-5 bg-dark text-white">
+<!-- Certificates Section -->
+<section id="certificates" class="py-5">
     <div class="container py-5">
-        <h2 class="fw-bold text-center text-info mb-5 font-monospace">// ENGINEERING SHOWCASE</h2>
-        <div class="row g-4">
-            @foreach($projects as $proj)
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h6 class="text-uppercase fw-bold" style="color: var(--st-secondary); letter-spacing: 2px;">Credentials</h6>
+            <h2 class="fw-extrabold text-white display-6">Verified <span class="text-gradient">Certifications</span></h2>
+        </div>
+        <div class="row g-4 justify-content-center">
+            @foreach($certificates as $cert)
                 <div class="col-md-4" data-aos="fade-up">
-                    <div class="border border-secondary p-3 bg-black h-100 position-relative">
-                        <div class="position-absolute top-0 end-0 p-1 bg-primary text-white font-monospace" style="font-size: 10px; z-index: 10;">{{ $proj->category->name ?? 'MODULE' }}</div>
-                        <img src="{{ $proj->cover_image }}" class="w-100 mb-3 border border-secondary" style="height: 180px; object-fit: cover;" alt="">
-                        <h5 class="fw-bold text-info font-monospace">{{ $proj->title }}</h5>
-                        <p class="text-secondary small font-monospace">{{ $proj->short_description }}</p>
-                        @if($proj->github_url)
-                            <a href="{{ $proj->github_url }}" target="_blank" class="text-white-50 small text-decoration-none font-monospace mt-2 d-inline-block hover-info">>_ SOURCE_CODE</a>
+                    <div class="glass-card p-4 h-100 text-center hover-border-info transition-all position-relative overflow-hidden">
+                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(circle at center, rgba(155, 81, 224, 0.1) 0%, transparent 70%); pointer-events: none;"></div>
+                        <i class="fa-solid fa-certificate fa-3x mb-3 floating-icon" style="color: var(--st-primary);"></i>
+                        <h5 class="fw-bold text-white mb-2">{{ $cert->title }}</h5>
+                        <h6 class="mb-2" style="color: var(--st-text-muted);">{{ $cert->issuer }}</h6>
+                        <span class="badge rounded-pill mb-3" style="background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.2); color: var(--st-primary);">{{ $cert->issue_date }}</span>
+                        @if($cert->verification_url)
+                            <div class="mt-2">
+                                <a href="{{ $cert->verification_url }}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill" style="border-color: rgba(255,255,255,0.2);">Verify <i class="fa-solid fa-arrow-up-right-from-square ms-1" style="font-size: 0.8em;"></i></a>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -197,23 +394,61 @@
     </div>
 </section>
 
-<!-- Contact -->
-<section id="contact" class="py-5 bg-black text-white">
+<!-- Blog Section -->
+<section id="blog" class="py-5" style="background: rgba(255,255,255,0.02);">
     <div class="container py-5">
-        <div class="border border-info p-5 max-w-2xl mx-auto bg-dark">
-            <h3 class="fw-bold text-info font-monospace mb-4 text-center">// INITIATE_CONNECTION</h3>
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h6 class="text-uppercase fw-bold" style="color: var(--st-primary); letter-spacing: 2px;">Engineering Log</h6>
+            <h2 class="fw-extrabold text-white display-6">Latest <span class="text-gradient">Articles</span></h2>
+        </div>
+        <div class="row g-4">
+            @foreach($recentBlogs as $blog)
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="glass-card overflow-hidden h-100 d-flex flex-column group">
+                        <div class="position-relative overflow-hidden">
+                            <img src="{{ $blog->cover_image }}" class="w-100 transition-all" style="height: 200px; object-fit: cover; transition: transform 0.5s;" alt="{{ $blog->title }}" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="small fw-bold mb-2" style="color: var(--st-secondary);">{{ $blog->created_at->format('M d, Y') }}</span>
+                            <h5 class="fw-bold text-white mb-3">{{ Str::limit($blog->title, 50) }}</h5>
+                            <p class="small flex-grow-1" style="color: var(--st-text-muted);">{{ Str::limit(strip_tags($blog->content), 100) }}</p>
+                            <a href="#" class="text-decoration-none fw-bold mt-3" style="color: var(--st-primary);">Read Post <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-5 position-relative">
+    <div class="container py-5 position-relative z-2">
+        <div class="glass-card p-4 p-md-5 max-w-2xl mx-auto" data-aos="zoom-in">
+            <div class="text-center mb-5">
+                <i class="fa-solid fa-paper-plane fa-3x mb-3 text-gradient"></i>
+                <h2 class="fw-extrabold text-white">Start a <span class="text-gradient">Project</span></h2>
+                <p style="color: var(--st-text-muted);">Ready to build something amazing? Let's talk.</p>
+            </div>
+            
             <form id="ajaxContactForm">
                 @csrf
-                <div class="mb-3">
-                    <input type="text" name="name" class="form-control bg-black text-white border-secondary rounded-0 font-monospace" placeholder="> NAME" required>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <input type="text" name="name" class="form-control px-4 py-3 text-white" placeholder="Your Name" required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="email" name="email" class="form-control px-4 py-3 text-white" placeholder="Your Email" required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+                    </div>
+                    <div class="col-12">
+                        <textarea name="message" class="form-control px-4 py-3 text-white" rows="5" placeholder="Tell us about your project..." required style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;"></textarea>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button type="submit" class="btn btn-glow rounded-pill px-5 py-3 fw-bold fs-5 w-100">
+                            Send Message <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <input type="email" name="email" class="form-control bg-black text-white border-secondary rounded-0 font-monospace" placeholder="> EMAIL" required>
-                </div>
-                <div class="mb-3">
-                    <textarea name="message" class="form-control bg-black text-white border-secondary rounded-0 font-monospace" rows="4" placeholder="> SPECIFICATIONS / MESSAGE" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-info rounded-0 w-100 fw-bold font-monospace">TRANSMIT</button>
             </form>
         </div>
     </div>

@@ -177,6 +177,53 @@
             @endforeach
         </div>
     </div>
+    </div>
+</section>
+
+<!-- Certificates Section -->
+<section id="certificates" class="py-5 bg-white">
+    <div class="container py-5">
+        <h2 class="fw-extrabold text-dark text-center mb-5">Certifications & Courses</h2>
+        <div class="row g-4 justify-content-center">
+            @foreach($certificates as $cert)
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="bg-light p-4 rounded-4 h-100 shadow-sm border text-center">
+                        <i class="fa-solid fa-certificate fa-3x mb-3" style="color: #8b5cf6;"></i>
+                        <h5 class="fw-bold text-dark mb-2">{{ $cert->title }}</h5>
+                        <h6 class="text-secondary small mb-2">{{ $cert->issuer }}</h6>
+                        <span class="badge bg-white text-dark border mb-3">{{ $cert->issue_date }}</span>
+                        @if($cert->verification_url)
+                            <div class="mt-2">
+                                <a href="{{ $cert->verification_url }}" target="_blank" class="btn btn-sm btn-outline-dark rounded-pill">View Certificate</a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section id="blog" class="py-5" style="background: #ede9fe;">
+    <div class="container py-5">
+        <h2 class="fw-extrabold text-dark text-center mb-5">Student Blog & Notes</h2>
+        <div class="row g-4">
+            @foreach($recentBlogs as $blog)
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="bg-white rounded-4 shadow-sm border overflow-hidden h-100 d-flex flex-column">
+                        <img src="{{ $blog->cover_image }}" class="w-100" style="height: 180px; object-fit: cover;" alt="{{ $blog->title }}">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="small fw-bold mb-2" style="color: #8b5cf6;">{{ $blog->created_at->format('M d, Y') }}</span>
+                            <h5 class="fw-bold text-dark mb-2">{{ Str::limit($blog->title, 45) }}</h5>
+                            <p class="text-secondary small flex-grow-1">{{ Str::limit(strip_tags($blog->content), 90) }}</p>
+                            <a href="#" class="text-decoration-none fw-bold mt-2" style="color: #8b5cf6;">Read More <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 </section>
 
 <!-- Contact -->

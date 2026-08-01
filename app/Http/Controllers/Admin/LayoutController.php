@@ -48,12 +48,12 @@ class LayoutController extends Controller
                 'color' => '#0284c7',
             ],
             [
-                'id' => 'layout5_photographer',
-                'name' => 'Layout 5: Photographer & Visual Artist',
-                'category' => 'Photographer / Filmmaker',
-                'badge' => 'Full-bleed Dark Gallery',
-                'description' => 'Immersive full-screen dark gallery, masonry layout, category filters, lightbox viewer, and booking inquiry drawer.',
-                'color' => '#f59e0b',
+                'id' => 'layout5_advocate',
+                'name' => 'Layout 5: Advocate & Legal Consultant',
+                'category' => 'Lawyer / Barrister / Law Firm',
+                'badge' => 'Premium Navy & Gold',
+                'description' => 'A luxurious, trustworthy design featuring elegant typography, glassmorphism cards, and dedicated sections for practice areas, notable cases, and legal insights.',
+                'color' => '#0B1F3A',
             ],
             [
                 'id' => 'layout6_designer',
