@@ -14,7 +14,7 @@
             <ul class="navbar-nav ms-auto gap-3">
                 @foreach($sections as $sec)
                     <li class="nav-item">
-                        <a class="nav-link text-white-50 fw-semibold hover-white" href="#{{ $sec->key }}">{{ $sec->name }}</a>
+                        <a class="nav-link text-dark fw-bold" href="#{{ $sec->key }}">{{ $sec->name }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -110,6 +110,110 @@
     </div>
 </section>
 
+<!-- Education Section -->
+<section id="education" class="py-5">
+    <div class="container py-5">
+        <div class="text-center max-w-2xl mx-auto mb-5" data-aos="fade-up">
+            <h6 class="text-primary fw-bold text-uppercase">Academic</h6>
+            <h2 class="fw-extrabold">Education & Degrees</h2>
+        </div>
+        <div class="row g-4">
+            @foreach($educations as $edu)
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="glass-card p-4 h-100 border-start border-4 border-primary">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h4 class="fw-bold mb-1">{{ $edu->degree }}</h4>
+                            <span class="badge bg-primary-subtle text-primary">{{ $edu->start_year }} - {{ $edu->end_year ?? 'Present' }}</span>
+                        </div>
+                        <h6 class="text-secondary mb-3">{{ $edu->institute }}</h6>
+                        <p class="text-white-50 small mb-2">Result: {{ $edu->result }}</p>
+                        @if($edu->description)
+                            <p class="text-muted small mb-0">{{ $edu->description }}</p>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Certificates Section -->
+<section id="certificates" class="py-5">
+    <div class="container py-5">
+        <div class="text-center max-w-2xl mx-auto mb-5" data-aos="fade-up">
+            <h6 class="text-primary fw-bold text-uppercase">Achievements</h6>
+            <h2 class="fw-extrabold">Certificates & Awards</h2>
+        </div>
+        <div class="row g-4 justify-content-center">
+            @foreach($certificates as $cert)
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="glass-card p-4 h-100 text-center border-top border-4 border-primary hover-up transition-all">
+                        <div class="mb-3">
+                            <i class="fa-solid fa-award fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">{{ $cert->title }}</h5>
+                        <h6 class="text-secondary small mb-2">{{ $cert->issuer }}</h6>
+                        <p class="text-primary fw-bold small mb-3">{{ $cert->issue_date }}</p>
+                        @if($cert->verification_url)
+                            <a href="{{ $cert->verification_url }}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill">Verify Credentials</a>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+
+<!-- Experience Section -->
+<section id="experience" class="py-5 bg-opacity-10">
+    <div class="container py-5">
+        <div class="text-center max-w-2xl mx-auto mb-5" data-aos="fade-up">
+            <h6 class="text-primary fw-bold text-uppercase">Career</h6>
+            <h2 class="fw-extrabold">Work Experience</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                @foreach($experiences as $exp)
+                    <div class="glass-card p-4 p-md-5 mb-4" data-aos="fade-up">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start mb-3 border-bottom border-secondary pb-3">
+                            <div>
+                                <h4 class="fw-bold mb-1">{{ $exp->designation }}</h4>
+                                <h6 class="text-primary">{{ $exp->company }}</h6>
+                            </div>
+                            <span class="badge bg-primary px-3 py-2 mt-2 mt-md-0">{{ $exp->start_date }} - {{ $exp->is_current ? 'Present' : $exp->end_date }}</span>
+                        </div>
+                        <p class="text-secondary small mb-0">{{ $exp->description }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-5">
+    <div class="container py-5">
+        <div class="text-center max-w-2xl mx-auto mb-5" data-aos="fade-up">
+            <h6 class="text-primary fw-bold text-uppercase">What I Do</h6>
+            <h2 class="fw-extrabold">My Services</h2>
+        </div>
+        <div class="row g-4">
+            @foreach($services as $svc)
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="glass-card p-4 h-100 text-center hover-up transition-all">
+                        <div class="d-inline-flex p-3 rounded-circle bg-primary-subtle text-primary mb-3">
+                            <i class="{{ $svc->icon ?? 'fa-solid fa-laptop-code' }} fa-2xl"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">{{ $svc->title }}</h5>
+                        <p class="text-secondary small mb-0">{{ $svc->short_description }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
 <!-- Skills Section -->
 <section id="skills" class="py-5 bg-opacity-10">
     <div class="container py-5">
@@ -169,6 +273,34 @@
                                     <a href="{{ $proj->github_url }}" target="_blank" class="btn btn-sm btn-outline-light"><i class="fa-brands fa-github"></i></a>
                                 @endif
                             </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section id="blog" class="py-5 bg-opacity-10">
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-end mb-5" data-aos="fade-up">
+            <div>
+                <h6 class="text-primary fw-bold text-uppercase">Articles</h6>
+                <h2 class="fw-extrabold mb-0">Latest Blog Posts</h2>
+            </div>
+            <a href="#" class="btn btn-outline-light d-none d-md-block">View All Posts</a>
+        </div>
+        <div class="row g-4">
+            @foreach($recentBlogs as $blog)
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="glass-card h-100 overflow-hidden d-flex flex-column hover-up transition-all">
+                        <img src="{{ $blog->cover_image }}" class="w-100" style="height: 200px; object-fit: cover;" alt="{{ $blog->title }}">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="text-primary small fw-bold mb-2">{{ $blog->created_at->format('M d, Y') }}</span>
+                            <h5 class="fw-bold mb-3">{{ Str::limit($blog->title, 50) }}</h5>
+                            <p class="text-secondary small flex-grow-1">{{ Str::limit(strip_tags($blog->content), 100) }}</p>
+                            <a href="#" class="text-white text-decoration-none fw-semibold mt-3">Read More <i class="fa-solid fa-arrow-right ms-1 text-primary"></i></a>
                         </div>
                     </div>
                 </div>
