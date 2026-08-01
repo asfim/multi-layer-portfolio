@@ -26,11 +26,11 @@ class PortfolioController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'full_name' => 'required|string|max:255',
             'profession' => 'required|string|max:255',
-            'profile_photo' => 'nullable|string',
-            'cover_image' => 'nullable|string',
+            'profile_photo' => 'nullable|image|max:5120',
+            'cover_image' => 'nullable|image|max:5120',
             'short_bio' => 'nullable|string',
             'about_me' => 'nullable|string',
             'availability' => 'nullable|string',
@@ -55,10 +55,21 @@ class PortfolioController extends Controller
             'stackoverflow' => 'nullable|url',
             'researchgate' => 'nullable|url',
             'google_scholar' => 'nullable|url',
-        ]);
+        ];
+
+        $request->validate($rules);
+        $data = $request->except(['profile_photo', 'cover_image']);
+
+        if ($request->hasFile('profile_photo')) {
+            $data['profile_photo'] = $request->file('profile_photo')->store('portfolio', 'public');
+        }
+
+        if ($request->hasFile('cover_image')) {
+            $data['cover_image'] = $request->file('cover_image')->store('portfolio', 'public');
+        }
 
         $portfolio = Portfolio::firstOrCreate(['user_id' => Auth::id() ?? 1]);
-        $portfolio->update($validated);
+        $portfolio->update($data);
 
         return back()->with('success', 'Portfolio details updated successfully!');
     }

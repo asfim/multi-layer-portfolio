@@ -42,6 +42,9 @@
                         </td>
                         <td><code>{{ $skill->icon }}</code></td>
                         <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary rounded-3 me-1" data-bs-toggle="modal" data-bs-target="#editSkillModal{{ $skill->id }}">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
                             <form action="{{ route('admin.skills.destroy', $skill->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -51,6 +54,49 @@
                             </form>
                         </td>
                     </tr>
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editSkillModal{{ $skill->id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content text-start">
+                                <form action="{{ route('admin.skills.update', $skill->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold">Edit Skill</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Skill Name</label>
+                                            <input type="text" name="name" class="form-control" value="{{ $skill->name }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Category</label>
+                                            <select name="category_id" class="form-select">
+                                                <option value="">Select Category</option>
+                                                @foreach($categories as $cat)
+                                                    <option value="{{ $cat->id }}" {{ $skill->category_id == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Proficiency Percentage (0 - 100)</label>
+                                            <input type="number" name="proficiency" class="form-control" value="{{ $skill->proficiency }}" min="0" max="100" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">FontAwesome Icon Class</label>
+                                            <input type="text" name="icon" class="form-control" value="{{ $skill->icon }}">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @empty
                     <tr>
                         <td colspan="5" class="text-center py-4 text-muted">No skills found. Add your first skill above!</td>

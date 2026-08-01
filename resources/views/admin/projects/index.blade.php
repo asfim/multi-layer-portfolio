@@ -52,6 +52,9 @@
                             @endif
                         </td>
                         <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary rounded-3 me-1" data-bs-toggle="modal" data-bs-target="#editProjectModal{{ $project->id }}">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
                             <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -61,6 +64,80 @@
                             </form>
                         </td>
                     </tr>
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editProjectModal{{ $project->id }}" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <form action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold">Edit Project</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-8">
+                                                <label class="form-label fw-semibold">Project Title</label>
+                                                <input type="text" name="title" class="form-control" value="{{ $project->title }}" required>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Category</label>
+                                                <select name="category_id" class="form-select">
+                                                    <option value="">Select Category</option>
+                                                    @foreach($categories as $cat)
+                                                        <option value="{{ $cat->id }}" {{ $project->category_id == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-semibold">Cover Image</label>
+                                                @if($project->cover_image)
+                                                    <div class="mb-2"><img src="{{ $project->cover_image }}" width="60" class="rounded"></div>
+                                                @endif
+                                                <input type="file" name="cover_image" class="form-control" accept="image/*">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-semibold">Client Name</label>
+                                                <input type="text" name="client_name" class="form-control" value="{{ $project->client_name }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-semibold">Live Project URL</label>
+                                                <input type="url" name="live_url" class="form-control" value="{{ $project->live_url }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-semibold">GitHub Repository URL</label>
+                                                <input type="url" name="github_url" class="form-control" value="{{ $project->github_url }}">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label fw-semibold">Technologies (Comma Separated)</label>
+                                                <input type="text" name="technologies" class="form-control" value="{{ is_array($project->technologies) ? implode(', ', $project->technologies) : '' }}">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label fw-semibold">Short Description</label>
+                                                <textarea name="short_description" class="form-control" rows="2">{{ $project->short_description }}</textarea>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label fw-semibold">Full Description</label>
+                                                <textarea name="description" class="form-control" rows="4">{{ $project->description }}</textarea>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="is_featured" id="featCheck{{ $project->id }}" {{ $project->is_featured ? 'checked' : '' }}>
+                                                    <label class="form-check-label fw-semibold" for="featCheck{{ $project->id }}">Show on Featured Projects Section</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @empty
                     <tr>
                         <td colspan="6" class="text-center py-4 text-muted">No projects found. Create your first project above!</td>
@@ -75,7 +152,7 @@
 <div class="modal fade" id="createProjectModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ route('admin.projects.store') }}" method="POST">
+            <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold">Add New Project</h5>
@@ -97,8 +174,8 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Cover Image URL</label>
-                            <input type="text" name="cover_image" class="form-control" placeholder="https://images.unsplash.com/...">
+                            <label class="form-label fw-semibold">Cover Image</label>
+                            <input type="file" name="cover_image" class="form-control" accept="image/*">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Client Name</label>

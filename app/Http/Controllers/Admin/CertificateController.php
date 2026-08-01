@@ -19,15 +19,22 @@ class CertificateController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'title' => 'required|string|max:255',
             'issuer' => 'required|string|max:255',
             'issue_date' => 'nullable|string',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image|max:5120',
             'verification_url' => 'nullable|url',
-        ]);
+        ];
 
-        Certificate::create($validated);
+        $request->validate($rules);
+        $data = $request->except(['image']);
+        
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('certificates', 'public');
+        }
+
+        Certificate::create($data);
 
         return back()->with('success', 'Certificate added!');
     }
@@ -36,15 +43,22 @@ class CertificateController extends Controller
     {
         $cert = Certificate::findOrFail($id);
 
-        $validated = $request->validate([
+        $rules = [
             'title' => 'required|string|max:255',
             'issuer' => 'required|string|max:255',
             'issue_date' => 'nullable|string',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image|max:5120',
             'verification_url' => 'nullable|url',
-        ]);
+        ];
 
-        $cert->update($validated);
+        $request->validate($rules);
+        $data = $request->except(['image']);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('certificates', 'public');
+        }
+
+        $cert->update($data);
 
         return back()->with('success', 'Certificate updated!');
     }

@@ -18,4 +18,10 @@ class Testimonial extends Model
         'review',
         'order',
     ];
+
+    public function getClientPhotoAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
 }

@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<form action="{{ route('admin.settings.update') }}" method="POST">
+<form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -34,6 +34,27 @@
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Meta Keywords</label>
                     <input type="text" name="meta_keywords" class="form-control" value="{{ $settings->meta_keywords }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Site Logo</label>
+                    @if($settings->logo)
+                        <div class="mb-2"><img src="{{ $settings->logo }}" width="80" class="rounded bg-light p-1"></div>
+                    @endif
+                    <input type="file" name="logo" class="form-control" accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Favicon</label>
+                    @if($settings->favicon)
+                        <div class="mb-2"><img src="{{ $settings->favicon }}" width="32" class="rounded"></div>
+                    @endif
+                    <input type="file" name="favicon" class="form-control" accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">SEO Meta Image</label>
+                    @if($settings->meta_image)
+                        <div class="mb-2"><img src="{{ $settings->meta_image }}" width="120" class="rounded"></div>
+                    @endif
+                    <input type="file" name="meta_image" class="form-control" accept="image/*">
                 </div>
             </div>
         </div>

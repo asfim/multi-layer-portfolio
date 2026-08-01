@@ -47,4 +47,16 @@ class Portfolio extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getProfilePhotoAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
+
+    public function getCoverImageAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
 }

@@ -42,6 +42,9 @@
                             @endif
                         </td>
                         <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary rounded-3 me-1" data-bs-toggle="modal" data-bs-target="#editExpModal{{ $exp->id }}">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
                             <form action="{{ route('admin.experience.destroy', $exp->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -51,6 +54,60 @@
                             </form>
                         </td>
                     </tr>
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editExpModal{{ $exp->id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content text-start">
+                                <form action="{{ route('admin.experience.update', $exp->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold">Edit Experience</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Company Name</label>
+                                            <input type="text" name="company" class="form-control" value="{{ $exp->company }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Designation / Role Title</label>
+                                            <input type="text" name="designation" class="form-control" value="{{ $exp->designation }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Location</label>
+                                            <input type="text" name="location" class="form-control" value="{{ $exp->location }}">
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-6">
+                                                <label class="form-label fw-semibold">Start Year/Date</label>
+                                                <input type="text" name="start_date" class="form-control" value="{{ $exp->start_date }}" required>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label fw-semibold">End Year/Date</label>
+                                                <input type="text" name="end_date" class="form-control" value="{{ $exp->end_date }}">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="is_current" id="currCheck{{ $exp->id }}" {{ $exp->is_current ? 'checked' : '' }}>
+                                                <label class="form-check-label fw-semibold" for="currCheck{{ $exp->id }}">Currently Working Here</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Description</label>
+                                            <textarea name="description" class="form-control" rows="3">{{ $exp->description }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @empty
                     <tr>
                         <td colspan="5" class="text-center py-4 text-muted">No experience entries found. Add your first career milestone!</td>

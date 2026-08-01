@@ -30,4 +30,22 @@ class SiteSetting extends Model
         'whatsapp_number',
         'telegram_username',
     ];
+
+    public function getLogoAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
+
+    public function getFaviconAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
+
+    public function getMetaImageAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
 }

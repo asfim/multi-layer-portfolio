@@ -17,4 +17,10 @@ class Certificate extends Model
         'verification_url',
         'order',
     ];
+
+    public function getImageAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
 }

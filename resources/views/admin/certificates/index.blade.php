@@ -41,6 +41,9 @@
                             @endif
                         </td>
                         <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary rounded-3 me-1" data-bs-toggle="modal" data-bs-target="#editCertModal{{ $cert->id }}">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
                             <form action="{{ route('admin.certificates.destroy', $cert->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -50,6 +53,51 @@
                             </form>
                         </td>
                     </tr>
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editCertModal{{ $cert->id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content text-start">
+                                <form action="{{ route('admin.certificates.update', $cert->id) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold">Edit Certificate</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Certificate Title</label>
+                                            <input type="text" name="title" class="form-control" value="{{ $cert->title }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Issuer Organization</label>
+                                            <input type="text" name="issuer" class="form-control" value="{{ $cert->issuer }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Issue Date / Year</label>
+                                            <input type="text" name="issue_date" class="form-control" value="{{ $cert->issue_date }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Verification URL</label>
+                                            <input type="url" name="verification_url" class="form-control" value="{{ $cert->verification_url }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Certificate Badge Image</label>
+                                            @if($cert->image)
+                                                <div class="mb-2"><img src="{{ $cert->image }}" width="60" class="rounded"></div>
+                                            @endif
+                                            <input type="file" name="image" class="form-control" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @empty
                     <tr>
                         <td colspan="5" class="text-center py-4 text-muted">No certificates found. Add your certifications above!</td>
@@ -63,7 +111,7 @@
 <div class="modal fade" id="createCertModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('admin.certificates.store') }}" method="POST">
+            <form action="{{ route('admin.certificates.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold">Add Certificate</h5>
@@ -87,8 +135,8 @@
                         <input type="url" name="verification_url" class="form-control" placeholder="https://">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Certificate Badge Image URL</label>
-                        <input type="text" name="image" class="form-control" placeholder="https://">
+                        <label class="form-label fw-semibold">Certificate Badge Image</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -40,4 +40,10 @@ class Project extends Model
     {
         return $this->belongsTo(ProjectCategory::class, 'category_id');
     }
+
+    public function getCoverImageAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
 }

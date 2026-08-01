@@ -21,16 +21,23 @@ class TestimonialController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'client_name' => 'required|string|max:255',
             'designation' => 'nullable|string',
             'company' => 'nullable|string',
-            'client_photo' => 'nullable|string',
+            'client_photo' => 'nullable|image|max:5120',
             'rating' => 'required|integer|min:1|max:5',
             'review' => 'required|string',
-        ]);
+        ];
 
-        Testimonial::create($validated);
+        $request->validate($rules);
+        $data = $request->except(['client_photo']);
+
+        if ($request->hasFile('client_photo')) {
+            $data['client_photo'] = $request->file('client_photo')->store('testimonials', 'public');
+        }
+
+        Testimonial::create($data);
 
         return back()->with('success', 'Testimonial added!');
     }
@@ -39,16 +46,23 @@ class TestimonialController extends Controller
     {
         $test = Testimonial::findOrFail($id);
 
-        $validated = $request->validate([
+        $rules = [
             'client_name' => 'required|string|max:255',
             'designation' => 'nullable|string',
             'company' => 'nullable|string',
-            'client_photo' => 'nullable|string',
+            'client_photo' => 'nullable|image|max:5120',
             'rating' => 'required|integer|min:1|max:5',
             'review' => 'required|string',
-        ]);
+        ];
 
-        $test->update($validated);
+        $request->validate($rules);
+        $data = $request->except(['client_photo']);
+
+        if ($request->hasFile('client_photo')) {
+            $data['client_photo'] = $request->file('client_photo')->store('testimonials', 'public');
+        }
+
+        $test->update($data);
 
         return back()->with('success', 'Testimonial updated!');
     }

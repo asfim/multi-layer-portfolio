@@ -19,13 +19,14 @@ class SettingController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'site_name' => 'required|string|max:255',
-            'logo' => 'nullable|string',
-            'favicon' => 'nullable|string',
+            'logo' => 'nullable|image|max:2048',
+            'favicon' => 'nullable|image|max:1024',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
+            'meta_image' => 'nullable|image|max:5120',
             'google_analytics_id' => 'nullable|string',
             'facebook_pixel_id' => 'nullable|string',
             'smtp_host' => 'nullable|string',
@@ -38,10 +39,23 @@ class SettingController extends Controller
             'google_map_iframe' => 'nullable|string',
             'whatsapp_number' => 'nullable|string',
             'telegram_username' => 'nullable|string',
-        ]);
+        ];
+
+        $request->validate($rules);
+        $data = $request->except(['logo', 'favicon', 'meta_image']);
+
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $request->file('logo')->store('settings', 'public');
+        }
+        if ($request->hasFile('favicon')) {
+            $data['favicon'] = $request->file('favicon')->store('settings', 'public');
+        }
+        if ($request->hasFile('meta_image')) {
+            $data['meta_image'] = $request->file('meta_image')->store('settings', 'public');
+        }
 
         $settings = SiteSetting::firstOrCreate(['id' => 1]);
-        $settings->update($validated);
+        $settings->update($data);
 
         return back()->with('success', 'Site settings & SEO updated successfully!');
     }

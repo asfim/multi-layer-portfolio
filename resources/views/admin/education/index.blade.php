@@ -36,6 +36,9 @@
                         <td><span class="badge bg-light text-dark border">{{ $edu->result ?? 'N/A' }}</span></td>
                         <td>{{ $edu->start_year }} - {{ $edu->end_year ?? 'Present' }}</td>
                         <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary rounded-3 me-1" data-bs-toggle="modal" data-bs-target="#editEduModal{{ $edu->id }}">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
                             <form action="{{ route('admin.education.destroy', $edu->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -45,6 +48,54 @@
                             </form>
                         </td>
                     </tr>
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editEduModal{{ $edu->id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content text-start">
+                                <form action="{{ route('admin.education.update', $edu->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold">Edit Education</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Institute / University</label>
+                                            <input type="text" name="institute" class="form-control" value="{{ $edu->institute }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Degree</label>
+                                            <input type="text" name="degree" class="form-control" value="{{ $edu->degree }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Department / Specialization</label>
+                                            <input type="text" name="department" class="form-control" value="{{ $edu->department }}">
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-6">
+                                                <label class="form-label fw-semibold">Start Year</label>
+                                                <input type="text" name="start_year" class="form-control" value="{{ $edu->start_year }}" required>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label fw-semibold">End Year</label>
+                                                <input type="text" name="end_year" class="form-control" value="{{ $edu->end_year }}">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Result / GPA</label>
+                                            <input type="text" name="result" class="form-control" value="{{ $edu->result }}">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @empty
                     <tr>
                         <td colspan="5" class="text-center py-4 text-muted">No education records found. Add your academic background above!</td>

@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<form action="{{ route('admin.portfolio.update') }}" method="POST">
+<form action="{{ route('admin.portfolio.update') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -30,12 +30,18 @@
                         <input type="text" name="profession" class="form-control" value="{{ $portfolio->profession }}" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Profile Photo URL</label>
-                        <input type="text" name="profile_photo" class="form-control" value="{{ $portfolio->profile_photo }}">
+                        <label class="form-label fw-semibold">Profile Photo</label>
+                        @if($portfolio->profile_photo)
+                            <div class="mb-2"><img src="{{ $portfolio->profile_photo }}" width="60" class="rounded"></div>
+                        @endif
+                        <input type="file" name="profile_photo" class="form-control" accept="image/*">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Cover Image URL</label>
-                        <input type="text" name="cover_image" class="form-control" value="{{ $portfolio->cover_image }}">
+                        <label class="form-label fw-semibold">Cover Image</label>
+                        @if($portfolio->cover_image)
+                            <div class="mb-2"><img src="{{ $portfolio->cover_image }}" width="100" class="rounded"></div>
+                        @endif
+                        <input type="file" name="cover_image" class="form-control" accept="image/*">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Availability Status</label>

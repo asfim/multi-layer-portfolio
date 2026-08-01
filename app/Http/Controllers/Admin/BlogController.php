@@ -22,25 +22,32 @@ class BlogController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'category_id' => 'nullable|exists:blog_categories,id',
             'title' => 'required|string|max:255',
             'excerpt' => 'nullable|string',
             'content' => 'required|string',
-            'featured_image' => 'nullable|string',
+            'featured_image' => 'nullable|image|max:5120',
             'tags' => 'nullable|string',
             'is_published' => 'boolean',
-        ]);
+        ];
 
-        $validated['slug'] = Str::slug($validated['title']).'-'.Str::random(4);
-        $validated['is_published'] = $request->has('is_published');
-        $validated['published_at'] = $validated['is_published'] ? now() : null;
+        $request->validate($rules);
+        $data = $request->except(['featured_image']);
 
-        if (! empty($validated['tags'])) {
-            $validated['tags'] = array_map('trim', explode(',', $validated['tags']));
+        $data['slug'] = Str::slug($request->title).'-'.Str::random(4);
+        $data['is_published'] = $request->has('is_published');
+        $data['published_at'] = $data['is_published'] ? now() : null;
+
+        if (! empty($data['tags'])) {
+            $data['tags'] = array_map('trim', explode(',', $data['tags']));
         }
 
-        BlogPost::create($validated);
+        if ($request->hasFile('featured_image')) {
+            $data['featured_image'] = $request->file('featured_image')->store('blogs', 'public');
+        }
+
+        BlogPost::create($data);
 
         return back()->with('success', 'Blog post created successfully!');
     }
@@ -49,26 +56,33 @@ class BlogController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $validated = $request->validate([
+        $rules = [
             'category_id' => 'nullable|exists:blog_categories,id',
             'title' => 'required|string|max:255',
             'excerpt' => 'nullable|string',
             'content' => 'required|string',
-            'featured_image' => 'nullable|string',
+            'featured_image' => 'nullable|image|max:5120',
             'tags' => 'nullable|string',
             'is_published' => 'boolean',
-        ]);
+        ];
 
-        $validated['is_published'] = $request->has('is_published');
-        if ($validated['is_published'] && ! $post->published_at) {
-            $validated['published_at'] = now();
+        $request->validate($rules);
+        $data = $request->except(['featured_image']);
+
+        $data['is_published'] = $request->has('is_published');
+        if ($data['is_published'] && ! $post->published_at) {
+            $data['published_at'] = now();
         }
 
-        if (! empty($validated['tags']) && is_string($validated['tags'])) {
-            $validated['tags'] = array_map('trim', explode(',', $validated['tags']));
+        if (! empty($data['tags']) && is_string($data['tags'])) {
+            $data['tags'] = array_map('trim', explode(',', $data['tags']));
         }
 
-        $post->update($validated);
+        if ($request->hasFile('featured_image')) {
+            $data['featured_image'] = $request->file('featured_image')->store('blogs', 'public');
+        }
+
+        $post->update($data);
 
         return back()->with('success', 'Blog post updated successfully!');
     }

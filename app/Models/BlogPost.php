@@ -42,4 +42,10 @@ class BlogPost extends Model
     {
         return $this->hasMany(Comment::class, 'blog_post_id')->where('is_approved', true);
     }
+
+    public function getFeaturedImageAttribute($value)
+    {
+        if (empty($value)) return $value;
+        return str_starts_with($value, 'http') ? $value : asset('storage/' . $value);
+    }
 }

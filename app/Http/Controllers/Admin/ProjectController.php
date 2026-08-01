@@ -22,28 +22,35 @@ class ProjectController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $rules = [
             'category_id' => 'nullable|exists:project_categories,id',
             'title' => 'required|string|max:255',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
-            'cover_image' => 'nullable|string',
+            'cover_image' => 'nullable|image|max:5120',
             'client_name' => 'nullable|string',
             'project_date' => 'nullable|string',
             'live_url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'technologies' => 'nullable|string', // comma separated string converted to array
             'is_featured' => 'boolean',
-        ]);
+        ];
 
-        $validated['slug'] = Str::slug($validated['title']).'-'.Str::random(4);
-        $validated['is_featured'] = $request->has('is_featured');
+        $request->validate($rules);
+        $data = $request->except(['cover_image']);
+        
+        $data['slug'] = Str::slug($request->title).'-'.Str::random(4);
+        $data['is_featured'] = $request->has('is_featured');
 
-        if (! empty($validated['technologies'])) {
-            $validated['technologies'] = array_map('trim', explode(',', $validated['technologies']));
+        if (! empty($data['technologies'])) {
+            $data['technologies'] = array_map('trim', explode(',', $data['technologies']));
         }
 
-        Project::create($validated);
+        if ($request->hasFile('cover_image')) {
+            $data['cover_image'] = $request->file('cover_image')->store('projects', 'public');
+        }
+
+        Project::create($data);
 
         return back()->with('success', 'Project created successfully!');
     }
@@ -52,26 +59,33 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
-        $validated = $request->validate([
+        $rules = [
             'category_id' => 'nullable|exists:project_categories,id',
             'title' => 'required|string|max:255',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
-            'cover_image' => 'nullable|string',
+            'cover_image' => 'nullable|image|max:5120',
             'client_name' => 'nullable|string',
             'project_date' => 'nullable|string',
             'live_url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'technologies' => 'nullable|string',
             'is_featured' => 'boolean',
-        ]);
+        ];
 
-        $validated['is_featured'] = $request->has('is_featured');
-        if (! empty($validated['technologies']) && is_string($validated['technologies'])) {
-            $validated['technologies'] = array_map('trim', explode(',', $validated['technologies']));
+        $request->validate($rules);
+        $data = $request->except(['cover_image']);
+        
+        $data['is_featured'] = $request->has('is_featured');
+        if (! empty($data['technologies']) && is_string($data['technologies'])) {
+            $data['technologies'] = array_map('trim', explode(',', $data['technologies']));
         }
 
-        $project->update($validated);
+        if ($request->hasFile('cover_image')) {
+            $data['cover_image'] = $request->file('cover_image')->store('projects', 'public');
+        }
+
+        $project->update($data);
 
         return back()->with('success', 'Project updated successfully!');
     }
