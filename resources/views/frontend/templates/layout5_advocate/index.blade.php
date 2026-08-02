@@ -348,6 +348,33 @@
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   }
+
+  /* Active Burger Animation */
+  .burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.active span:nth-child(2) { opacity: 0; }
+  .burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Dark Mode Support */
+  .dark body {
+    background: #0B1F3A !important;
+    color: #F7F5EF;
+  }
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark .brand-text b {
+    color: #FFFFFF !important;
+  }
+  .dark .about, .dark .testimonials, .dark .form-card {
+    background: #122649 !important;
+  }
+  .dark .p-card, .dark .t-card, .dark .p-step .num {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .dark .t-card p, .dark .p-step p, .dark .about-copy p, .dark .section-head p, .dark .info-row span {
+    color: #C7CCD4 !important;
+  }
+  .dark .t-card .who b, .dark .p-step h4, .dark .about-copy h3, .dark .info-row b {
+    color: #FFFFFF !important;
+  }
 </style>
 
 <!-- ============ HEADER ============ -->

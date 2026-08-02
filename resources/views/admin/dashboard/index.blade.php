@@ -5,7 +5,7 @@
 @section('content')
 <div class="row g-4 mb-4">
     <!-- Stat 1 -->
-    <div class="col-md-3">
+    <div class="col-sm-6 col-md-3">
         <div class="card-custom p-4 d-flex align-items-center gap-3">
             <div class="bg-primary-subtle text-primary p-3 rounded-4">
                 <i class="fa-solid fa-folder-open fa-2xl"></i>
@@ -17,7 +17,7 @@
         </div>
     </div>
     <!-- Stat 2 -->
-    <div class="col-md-3">
+    <div class="col-sm-6 col-md-3">
         <div class="card-custom p-4 d-flex align-items-center gap-3">
             <div class="bg-success-subtle text-success p-3 rounded-4">
                 <i class="fa-solid fa-laptop-code fa-2xl"></i>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <!-- Stat 3 -->
-    <div class="col-md-3">
+    <div class="col-sm-6 col-md-3">
         <div class="card-custom p-4 d-flex align-items-center gap-3">
             <div class="bg-warning-subtle text-warning p-3 rounded-4">
                 <i class="fa-solid fa-newspaper fa-2xl"></i>
@@ -41,7 +41,7 @@
         </div>
     </div>
     <!-- Stat 4 -->
-    <div class="col-md-3">
+    <div class="col-sm-6 col-md-3">
         <div class="card-custom p-4 d-flex align-items-center gap-3">
             <div class="bg-info-subtle text-info p-3 rounded-4">
                 <i class="fa-solid fa-envelope fa-2xl"></i>

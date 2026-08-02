@@ -1,5 +1,21 @@
 @extends('frontend.layouts.app')
 
+@push('styles')
+<style>
+    .max-w-2xl {
+        max-width: 600px;
+    }
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background: #000000;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid #1e293b;
+        }
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Agency Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top bg-black py-3 px-4 shadow-sm border-bottom border-dark">

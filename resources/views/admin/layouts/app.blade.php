@@ -110,6 +110,7 @@
             border-bottom: 1px solid var(--card-border);
             padding: 1.25rem 1.5rem;
             font-weight: 700;
+        }
 
         .btn-accent {
             background: var(--accent-color);
@@ -123,10 +124,68 @@
             background: #2563eb;
             color: #fff;
         }
+
+        /* Mobile Responsiveness */
+        .sidebar-toggle-btn {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar-toggle-btn {
+                display: block;
+            }
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+            .admin-sidebar.show {
+                transform: translateX(0);
+            }
+            .admin-main {
+                margin-left: 0;
+            }
+            .admin-navbar {
+                padding: 1rem;
+            }
+            .admin-content {
+                padding: 1rem;
+            }
+        }
+        
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .sidebar-overlay.show {
+            display: block;
+        }
+
+        /* Custom scrollbar for sidebar */
+        .admin-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .admin-sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .admin-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+        .admin-sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
     @stack('styles')
 </head>
 <body>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Sidebar Nav -->
     <aside class="admin-sidebar">
@@ -215,17 +274,20 @@
     <!-- Main Section -->
     <main class="admin-main">
         <header class="admin-navbar">
-            <div>
-                <h5 class="fw-bold mb-0">@yield('title', 'Admin Dashboard')</h5>
+            <div class="d-flex align-items-center gap-2 text-nowrap overflow-hidden">
+                <button class="btn btn-light sidebar-toggle-btn" id="sidebarToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h5 class="fw-bold mb-0 text-truncate">@yield('title', 'Admin Dashboard')</h5>
             </div>
-            <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('home') }}" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
-                    <i class="fa-solid fa-external-link me-1"></i> Live Website
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('home') }}" target="_blank" class="btn btn-outline-secondary btn-sm rounded-pill px-3 d-flex align-items-center gap-1" title="Live Website">
+                    <i class="fa-solid fa-external-link"></i> <span class="d-none d-sm-inline">Live Website</span>
                 </a>
-                <form action="{{ route('logout') }}" method="POST">
+                <form action="{{ route('logout') }}" method="POST" class="m-0">
                     @csrf
-                    <button type="submit" class="btn btn-danger btn-sm rounded-pill px-3">
-                        <i class="fa-solid fa-power-off me-1"></i> Logout
+                    <button type="submit" class="btn btn-danger btn-sm rounded-pill px-3 d-flex align-items-center gap-1" title="Logout">
+                        <i class="fa-solid fa-power-off"></i> <span class="d-none d-sm-inline">Logout</span>
                     </button>
                 </form>
             </div>
@@ -239,6 +301,18 @@
                 </div>
             @endif
 
+            @if($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i> <strong>Validation Error:</strong>
+                    <ul class="mb-0 mt-1">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
             @yield('content')
         </div>
     </main>
@@ -247,6 +321,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+    
+    <!-- Sidebar Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('sidebarToggle');
+            const sidebar = document.querySelector('.admin-sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            if (toggle) {
+                toggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('show');
+                    overlay.classList.toggle('show');
+                });
+            }
+
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                });
+            }
+        });
+    </script>
+    
     @stack('scripts')
 </body>
 </html>

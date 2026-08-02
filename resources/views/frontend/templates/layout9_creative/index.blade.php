@@ -1,5 +1,22 @@
 @extends('frontend.layouts.app')
 
+@push('styles')
+<style>
+    .max-w-2xl {
+        max-width: 600px;
+    }
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background: #111827;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Creative Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top py-3 px-4 shadow-sm" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(15px);">

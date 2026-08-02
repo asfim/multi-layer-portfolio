@@ -1,5 +1,36 @@
 @extends('frontend.layouts.app')
 
+@push('styles')
+<style>
+    .max-w-2xl {
+        max-width: 600px;
+    }
+    
+    /* Dark Mode support */
+    .dark body {
+        background-color: #0b0f19 !important;
+        color: #cbd5e1 !important;
+    }
+    .dark .bg-white, .dark #about, .dark #education, .dark #skills, .dark #projects {
+        background-color: #1e293b !important;
+        color: #cbd5e1 !important;
+    }
+    .dark #experience, .dark #contact, .dark .bg-light {
+        background-color: #0f172a !important;
+        color: #cbd5e1 !important;
+    }
+    .dark h1, .dark h2, .dark h3, .dark h4, .dark .text-dark {
+        color: #ffffff !important;
+    }
+    .dark .card, .dark .border {
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    .dark .navbar-toggler {
+        filter: invert(1);
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Consultant Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top py-3 px-4 shadow-sm" style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px);">

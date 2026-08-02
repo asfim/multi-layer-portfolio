@@ -30,7 +30,7 @@
                 @forelse($projects as $project)
                     <tr>
                         <td>
-                            <img src="{{ $project->cover_image }}" alt="" class="rounded-3" style="width: 54px; height: 40px; object-fit: cover;">
+                            <img src="{{ $project->cover_image ?: 'https://placehold.co/100x75/e2e8f0/475569?text=No+Image' }}" alt="" class="rounded-3" style="width: 54px; height: 40px; object-fit: cover;">
                         </td>
                         <td>
                             <div class="fw-bold">{{ $project->title }}</div>
@@ -126,7 +126,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" name="is_featured" id="featCheck{{ $project->id }}" {{ $project->is_featured ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="checkbox" name="is_featured" value="1" id="featCheck{{ $project->id }}" {{ $project->is_featured ? 'checked' : '' }}>
                                                     <label class="form-check-label fw-semibold" for="featCheck{{ $project->id }}">Show on Featured Projects Section</label>
                                                 </div>
                                             </div>
@@ -205,7 +205,7 @@
                         </div>
                         <div class="col-12">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="is_featured" id="featCheck" checked>
+                                <input class="form-check-input" type="checkbox" name="is_featured" value="1" id="featCheck" checked>
                                 <label class="form-check-label fw-semibold" for="featCheck">Show on Featured Projects Section</label>
                             </div>
                         </div>

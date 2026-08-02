@@ -1,5 +1,45 @@
 @extends('frontend.layouts.app')
 
+@push('styles')
+<style>
+    /* Dark Mode support */
+    .dark body {
+        background-color: #0b0f19 !important;
+        color: #cbd5e1 !important;
+    }
+    .dark .bg-white {
+        background-color: #1e293b !important;
+        color: #cbd5e1 !important;
+    }
+    .dark .bg-light {
+        background-color: #0f172a !important;
+        color: #cbd5e1 !important;
+    }
+    .dark .navbar {
+        background-color: #1e293b !important;
+        border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    .dark .navbar .navbar-brand {
+        color: #ffffff !important;
+    }
+    .dark .navbar .nav-link {
+        color: #cbd5e1 !important;
+    }
+    .dark .navbar .nav-link:hover {
+        color: #ffffff !important;
+    }
+    .dark h3, .dark h4, .dark h5, .dark h6, .dark .text-dark {
+        color: #ffffff !important;
+    }
+    .dark .border, .dark .border-bottom, .dark .border-top {
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    .dark .navbar-toggler {
+        filter: invert(1);
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Resume Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top py-3 px-4 shadow-sm bg-white border-bottom">
@@ -21,12 +61,12 @@
         </div>
     </div>
 </nav>
-
+ 
 <div class="container" style="padding-top: 100px; padding-bottom: 50px;">
     <div class="row g-4">
         <!-- Sidebar Profile -->
         <div class="col-lg-4" data-aos="fade-right">
-            <div class="bg-white rounded-4 shadow-sm p-4 text-center border sticky-top" style="top: 100px;">
+            <div class="bg-white rounded-4 shadow-sm p-4 text-center border sticky-lg-top" style="top: 100px;">
                 <img src="{{ $portfolio->profile_photo }}" class="rounded-circle mb-3 border border-4 border-primary shadow-sm" style="width: 160px; height: 160px; object-fit: cover;" alt="">
                 <h3 class="fw-bold mb-1 text-dark">{{ $portfolio->full_name }}</h3>
                 <p class="text-primary fw-semibold mb-3">{{ $portfolio->profession }}</p>

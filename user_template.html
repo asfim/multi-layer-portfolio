@@ -1,0 +1,593 @@
+<USER_REQUEST>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium UI/UX Template</title>
+  <!-- Bootstrap 5.3 + Icons + Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* CSS Variables & Reset */
+    :root {
+      --primary: #2563EB;
+      --secondary: #7C3AED;
+      --accent: #06B6D4;
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --dark: #0F172A;
+      --text: #1E293B;
+      --success: #10B981;
+      --radius: 24px;
+      --shadow-soft: 0 20px 40px -12px rgba(0,0,0,0.08), 0 8px 24px -6px rgba(0,0,0,0.02);
+      --shadow-glass: 0 8px 32px rgba(0,0,0,0.04);
+      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .text-primary { color: var(--primary) !important; }
+    .bg-primary { background-color: var(--primary) !important; }
+    .btn-primary { background: var(--primary); border: none; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-outline-primary { border-color: var(--primary); color: var(--primary); }
+    .btn-outline-primary:hover { background: var(--primary); color: #fff; }
+    .rounded-4 { border-radius: var(--radius) !important; }
+    .shadow-soft { box-shadow: var(--shadow-soft); }
+    .glass {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: var(--shadow-glass);
+    }
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .section-sub {
+      color: #64748b;
+      max-width: 600px;
+    }
+    /* navbar */
+    .navbar {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+    .navbar .nav-link { font-weight: 500; color: var(--text); margin: 0 8px; }
+    .navbar .nav-link:hover { color: var(--primary); }
+    /* hero */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #f0f5ff 0%, #e6eeff 100%);
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+    .hero .glass-card {
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-glass);
+    }
+    .floating {
+      animation: floatY 6s ease-in-out infinite;
+    }
+    @keyframes floatY {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0px); }
+    }
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+    /* cards & hover */
+    .service-card, .team-card, .pricing-card, .blog-card {
+      transition: var(--transition);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow-soft);
+      border: none;
+      overflow: hidden;
+    }
+    .service-card:hover, .team-card:hover, .pricing-card:hover, .blog-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 40px 60px -20px rgba(0,0,0,0.12);
+    }
+    .service-icon {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px;
+      color: #fff;
+      font-size: 28px;
+    }
+    .badge-popular {
+      background: var(--accent);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .pricing-card .price {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+    .pricing-card .price small {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #94a3b8;
+    }
+    .testimonial-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+    .filter-btn {
+      border-radius: 40px;
+      padding: 8px 24px;
+      margin: 4px;
+      border: 1px solid #e2e8f0;
+      background: transparent;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .portfolio-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      transition: var(--transition);
+    }
+    .portfolio-item img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    .portfolio-item:hover img {
+      transform: scale(1.05);
+    }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,23,42,0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+      color: #fff;
+    }
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+    .faq-item {
+      border-radius: var(--radius);
+      background: var(--card);
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-soft);
+      padding: 1rem 1.5rem;
+    }
+    .faq-item .faq-question {
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer {
+      background: var(--dark);
+      color: #cbd5e1;
+      border-top: 1px solid #1e293b;
+    }
+    .footer a { color: #94a3b8; text-decoration: none; transition: var(--transition); }
+    .footer a:hover { color: #fff; }
+    .social-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 40px;
+      background: rgba(255,255,255,0.05);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      transition: var(--transition);
+      margin-right: 8px;
+    }
+    .social-icon:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    /* responsive */
+    @media (max-width: 768px) {
+      .section-title { font-size: 2.2rem; }
+      .hero { padding-top: 100px; }
+      .stat-number { font-size: 2.2rem; }
+    }
+    /* skeleton loader simulation */
+    .skeleton {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 8px;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    /* micro interactions */
+    .hover-lift { transition: var(--transition); }
+    .hover-lift:hover { transform: translateY(-4px); }
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 1. Sticky Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold fs-4" href="#"><i class="bi bi-diamond-fill text-primary me-2"></i>Premium</a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Pages</a>
+          <ul class="dropdown-menu glass border-0 shadow-soft">
+            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus me-2"></i>Register</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-exclamation-triangle me-2"></i>404</a></li>
+          </ul>
+        </li>
+      </ul>
+      <a href="#" class="btn btn-primary rounded-pill px-4">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 2. Hero -->
+<section class="hero d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 mb-3">🚀 Next-gen platform</span>
+        <h1 class="display-3 fw-bold lh-1 mb-3">Build <span class="text-primary">premium</span> experiences</h1>
+        <p class="lead mb-4 text-secondary">Design stunning, conversion-focused websites with modern UI/UX. Apple-inspired, glassmorphism, and smooth animations.</p>
+        <div class="d-flex flex-wrap gap-3 mb-4">
+          <a href="#" class="btn btn-primary rounded-pill px-5 py-3">Start free trial <i class="bi bi-arrow-right ms-2"></i></a>
+          <a href="#" class="btn btn-outline-primary rounded-pill px-5 py-3">See demo</a>
+        </div>
+        <!-- Search bar -->
+        <div class="input-group mb-4 shadow-sm rounded-pill overflow-hidden" style="max-width: 420px;">
+          <input type="text" class="form-control border-0 py-3 ps-4" placeholder="Search for templates...">
+          <button class="btn btn-primary px-4" type="button"><i class="bi bi-search"></i></button>
+        </div>
+        <!-- Floating glass cards + stats -->
+        <div class="d-flex flex-wrap gap-4 mt-4">
+          <div class="glass-card floating"><i class="bi bi-star-fill text-warning me-1"></i> 4.9 (2.4k)</div>
+          <div class="glass-card floating" style="animation-delay:0.2s;"><i class="bi bi-people-fill text-primary me-1"></i> 12k+ users</div>
+        </div>
+      </div>
+      <div class="col-lg-6 position-relative">
+        <div class="glass p-4 rounded-4 shadow-soft">
+          <img src="https://placehold.co/600x400/2563EB/FFFFFF?text=Premium+Illustration" class="img-fluid rounded-4" alt="hero">
+        </div>
+        <!-- floating stats -->
+        <div class="position-absolute top-0 start-0 translate-middle glass px-4 py-2 rounded-4 shadow-soft floating">
+          <span class="stat-number" data-count="99">0</span><span class="fs-4 fw-bold">%</span> <span class="text-muted">satisfaction</span>
+        </div>
+        <div class="position-absolute bottom-0 end-0 translate-middle glass px-4 py-2 rounded-4 shadow-soft floating" style="animation-delay:0.4s;">
+          <span class="stat-number" data-count="12">0</span>k+ <span class="text-muted">projects</span>
+        </div>
+        <!-- scroll indicator -->
+        <div class="text-center mt-5 d-none d-lg-block">
+          <a href="#services" class="text-muted text-decoration-none"><i class="bi bi-chevron-down fs-3 animate-pulse"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Trusted Brands -->
+<section class="py-5 bg-white border-bottom">
+  <div class="container">
+    <p class="text-center text-secondary text-uppercase small fw-semibold tracking-wider">Trusted by 10,000+ companies</p>
+    <div class="row row-cols-2 row-cols-md-5 g-4 justify-content-center align-items-center">
+      <div class="col"><img src="https://placehold.co/120x40/e2e8f0/1e293b?text=Apple" class="img-fluid opacity-50" alt="brand"></div>
+      <div class="col"><img src="https://placehold.co/120x40/e2e8f0/1e293b?text=Stripe" class="img-fluid opacity-50" alt="brand"></div>
+      <div class="col"><img src="https://placehold.co/120x40/e2e8f0/1e293b?text=Airbnb" class="img-fluid opacity-50" alt="brand"></div>
+      <div class="col"><img src="https://placehold.co/120x40/e2e8f0/1e293b?text=Google" class="img-fluid opacity-50" alt="brand"></div>
+      <div class="col"><img src="https://placehold.co/120x40/e2e8f0/1e293b?text=Shopify" class="img-fluid opacity-50" alt="brand"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Services -->
+<section id="services" class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">Services</span>
+      <h2 class="section-title mt-2">Premium solutions <br class="d-md-none"> for your business</h2>
+      <p class="section-sub mx-auto">Modern, elegant, and conversion-focused design systems crafted with care.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="service-icon mb-3"><i class="bi bi-palette"></i></div>
+          <h4>UI/UX Design</h4>
+          <p class="text-secondary">Pixel-perfect interfaces with micro-interactions and glassmorphism.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="service-icon mb-3"><i class="bi bi-code-square"></i></div>
+          <h4>Development</h4>
+          <p class="text-secondary">Clean, accessible, and responsive code with Bootstrap 5.3.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card p-4 h-100">
+          <div class="service-icon mb-3"><i class="bi bi-graph-up-arrow"></i></div>
+          <h4>Conversion</h4>
+          <p class="text-secondary">Data-driven strategies to boost engagement and sales.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. About + Stats -->
+<section id="about" class="py-5 bg-white">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6">
+        <img src="https://placehold.co/600x400/0F172A/FFFFFF?text=About+Story" class="img-fluid rounded-4 shadow-soft" alt="about">
+      </div>
+      <div class="col-lg-6">
+        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">About</span>
+        <h2 class="section-title mt-2">Crafted with <span class="text-primary">precision</span> & passion</h2>
+        <p class="text-secondary">With 15+ years of experience at Apple, Stripe, and Airbnb, we design premium digital experiences that convert.</p>
+        <div class="row g-3 mt-3">
+          <div class="col-6"><i class="bi bi-check-circle-fill text-primary me-2"></i> WCAG accessible</div>
+          <div class="col-6"><i class="bi bi-check-circle-fill text-primary me-2"></i> Dark/light mode</div>
+          <div class="col-6"><i class="bi bi-check-circle-fill text-primary me-2"></i> Retina ready</div>
+          <div class="col-6"><i class="bi bi-check-circle-fill text-primary me-2"></i> Cross-browser</div>
+        </div>
+        <div class="d-flex gap-4 mt-4">
+          <div><span class="stat-number" data-count="250">0</span>+ <span class="text-secondary">projects</span></div>
+          <div><span class="stat-number" data-count="98">0</span>% <span class="text-secondary">satisfaction</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Statistics counter (already integrated) -->
+
+<!-- 7. Features Grid -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="section-title text-center">Features you'll love</h2>
+    <p class="section-sub text-center mx-auto mb-5">Every component is built for speed, accessibility, and premium feel.</p>
+    <div class="row g-4">
+      <div class="col-md-4"><div class="p-4 bg-white rounded-4 shadow-soft h-100"><i class="bi bi-layers fs-1 text-primary"></i><h5 class="mt-3">Glassmorphism</h5><p class="text-secondary">Frosted glass effects with backdrop blur.</p></div></div>
+      <div class="col-md-4"><div class="p-4 bg-white rounded-4 shadow-soft h-100"><i class="bi bi-grid-3x3-gap fs-1 text-primary"></i><h5 class="mt-3">Masonry Layout</h5><p class="text-secondary">Beautiful portfolio gallery with filters.</p></div></div>
+      <div class="col-md-4"><div class="p-4 bg-white rounded-4 shadow-soft h-100"><i class="bi bi-arrow-repeat fs-1 text-primary"></i><h5 class="mt-3">Smooth Animations</h5><p class="text-secondary">Fade, zoom, floating and micro-interactions.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Portfolio -->
+<section id="portfolio" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="section-title text-center">Portfolio</h2>
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">UI/UX</button>
+      <button class="filter-btn">Branding</button>
+      <button class="filter-btn">Development</button>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4"><div class="portfolio-item"><img src="https://placehold.co/400x300/2563EB/FFFFFF?text=Project+1" alt="project"><div class="portfolio-overlay"><span class="fs-5 fw-semibold">View project</span></div></div></div>
+      <div class="col-md-4"><div class="portfolio-item"><img src="https://placehold.co/400x300/7C3AED/FFFFFF?text=Project+2" alt="project"><div class="portfolio-overlay"><span class="fs-5 fw-semibold">View project</span></div></div></div>
+      <div class="col-md-4"><div class="portfolio-item"><img src="https://placehold.co/400x300/06B6D4/FFFFFF?text=Project+3" alt="project"><div class="portfolio-overlay"><span class="fs-5 fw-semibold">View project</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Product Cards (Project Cards) -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="section-title text-center">Featured projects</h2>
+    <div class="row g-4 mt-3">
+      <div class="col-md-4">
+        <div class="service-card p-3 position-relative">
+          <img src="https://placehold.co/400x250/0F172A/FFFFFF?text=Project" class="img-fluid rounded-4" alt="card">
+          <span class="badge bg-primary position-absolute top-0 start-0 m-3">Popular</span>
+          <div class="d-flex justify-content-between mt-3"><h5>Premium SaaS</h5><i class="bi bi-heart fs-5"></i></div>
+          <div class="d-flex justify-content-between"><span class="text-secondary"><i class="bi bi-star-fill text-warning"></i> 4.9</span><span class="fw-bold">$299</span></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card p-3">
+          <img src="https://placehold.co/400x250/1E293B/FFFFFF?text=Project" class="img-fluid rounded-4" alt="card">
+          <div class="d-flex justify-content-between mt-3"><h5>Real Estate</h5><i class="bi bi-heart fs-5"></i></div>
+          <div class="d-flex justify-content-between"><span class="text-secondary"><i class="bi bi-star-fill text-warning"></i> 4.8</span><span class="fw-bold">$499</span></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-card p-3">
+          <img src="https://placehold.co/400x250/2563EB/FFFFFF?text=Project" class="img-fluid rounded-4" alt="card">
+          <div class="d-flex justify-content-between mt-3"><h5>Travel Agency</h5><i class="bi bi-heart fs-5"></i></div>
+          <div class="d-flex justify-content-between"><span class="text-secondary"><i class="bi bi-star-fill text-warning"></i> 4.7</span><span class="fw-bold">$199</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Testimonials -->
+<section id="testimonials" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="section-title text-center">What clients say</h2>
+    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active"><div class="testimonial-card text-center"><img src="https://placehold.co/80x80/2563EB/FFFFFF?text=JD" class="rounded-circle mb-3" alt="avatar"><h5>John Doe</h5><p class="text-secondary">"This template is absolutely stunning. The glassmorphism and animations are top-notch."</p><div><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i></div></div></div>
+        <div class="carousel-item"><div class="testimonial-card text-center"><img src="https://placehold.co/80x80/7C3AED/FFFFFF?text=SM" class="rounded-circle mb-3" alt="avatar"><h5>Sarah M.</h5><p class="text-secondary">"Perfect for our SaaS product. Clean, modern, and conversion-focused."</p><div><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i></div></div></div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span></button>
+      <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next"><span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span></button>
+    </div>
+  </div>
+</section>
+
+<!-- 11. Team -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="section-title text-center">Our team</h2>
+    <div class="row g-4 mt-3">
+      <div class="col-md-3"><div class="team-card p-3 text-center"><img src="https://placehold.co/120x120/2563EB/FFFFFF?text=JD" class="rounded-circle mb-2" alt="team"><h5>John Doe</h5><p class="text-secondary">CEO</p></div></div>
+      <div class="col-md-3"><div class="team-card p-3 text-center"><img src="https://placehold.co/120x120/7C3AED/FFFFFF?text=SM" class="rounded-circle mb-2" alt="team"><h5>Sarah M.</h5><p class="text-secondary">Design lead</p></div></div>
+      <div class="col-md-3"><div class="team-card p-3 text-center"><img src="https://placehold.co/120x120/06B6D4/FFFFFF?text=AK" class="rounded-circle mb-2" alt="team"><h5>Alex K.</h5><p class="text-secondary">Developer</p></div></div>
+      <div class="col-md-3"><div class="team-card p-3 text-center"><img src="https://placehold.co/120x120/0F172A/FFFFFF?text=LR" class="rounded-circle mb-2" alt="team"><h5>Lisa R.</h5><p class="text-secondary">Product</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. Pricing -->
+<section id="pricing" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="section-title text-center">Choose your plan</h2>
+    <div class="row g-4 mt-3">
+      <div class="col-md-4"><div class="pricing-card p-4 text-center"><h4>Starter</h4><div class="price">$29 <small>/mo</small></div><ul class="list-unstyled mt-3"><li><i class="bi bi-check text-primary"></i> 5 projects</li><li><i class="bi bi-check text-primary"></i> Basic support</li></ul><a href="#" class="btn btn-outline-primary rounded-pill w-100">Get started</a></div></div>
+      <div class="col-md-4"><div class="pricing-card p-4 text-center border border-primary border-2"><span class="badge-popular">Popular</span><h4>Professional</h4><div class="price">$79 <small>/mo</small></div><ul class="list-unstyled mt-3"><li><i class="bi bi-check text-primary"></i> 50 projects</li><li><i class="bi bi-check text-primary"></i> Priority support</li></ul><a href="#" class="btn btn-primary rounded-pill w-100">Start trial</a></div></div>
+      <div class="col-md-4"><div class="pricing-card p-4 text-center"><h4>Enterprise</h4><div class="price">$199 <small>/mo</small></div><ul class="list-unstyled mt-3"><li><i class="bi bi-check text-primary"></i> Unlimited projects</li><li><i class="bi bi-check text-primary"></i> 24/7 support</li></ul><a href="#" class="btn btn-outline-primary rounded-pill w-100">Contact</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13. FAQ -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="section-title text-center">FAQ</h2>
+    <div class="row justify-content-center"><div class="col-lg-8">
+      <div class="faq-item"><div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq1">What is included? <i class="bi bi-chevron-down"></i></div><div id="faq1" class="collapse"><p class="mt-2 text-secondary">All sections, components, and premium UI elements.</p></div></div>
+      <div class="faq-item"><div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq2">Is it responsive? <i class="bi bi-chevron-down"></i></div><div id="faq2" class="collapse"><p class="mt-2 text-secondary">Yes, fully responsive mobile-first design.</p></div></div>
+      <div class="faq-item"><div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq3">Can I customize? <i class="bi bi-chevron-down"></i></div><div id="faq3" class="collapse"><p class="mt-2 text-secondary">100% customizable with CSS variables.</p></div></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- 14. Blog -->
+<section class="py-5 bg-white">
+  <div class="container"><h2 class="section-title text-center">Latest insights</h2>
+    <div class="row g-4 mt-3">
+      <div class="col-md-4"><div class="blog-card p-3"><img src="https://placehold.co/400x200/2563EB/FFFFFF?text=Blog" class="img-fluid rounded-4" alt="blog"><h5 class="mt-3">Design trends 2026</h5><p class="text-secondary">Explore the future of UI/UX.</p></div></div>
+      <div class="col-md-4"><div class="blog-card p-3"><img src="https://placehold.co/400x200/7C3AED/FFFFFF?text=Blog" class="img-fluid rounded-4" alt="blog"><h5 class="mt-3">Glassmorphism guide</h5><p class="text-secondary">Master the frosted glass effect.</p></div></div>
+      <div class="col-md-4"><div class="blog-card p-3"><img src="https://placehold.co/400x200/06B6D4/FFFFFF?text=Blog" class="img-fluid rounded-4" alt="blog"><h5 class="mt-3">Conversion hacks</h5><p class="text-secondary">Boost your conversion rate.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15. Newsletter -->
+<section class="py-5" style="background: linear-gradient(145deg, #f0f5ff, #e6eeff);">
+  <div class="container text-center"><h3 class="fw-bold">Join our newsletter</h3><p class="text-secondary">Get the latest design tips and templates.</p>
+    <div class="input-group mx-auto" style="max-width: 440px;"><input type="email" class="form-control py-3" placeholder="Email address"><button class="btn btn-primary px-5">Subscribe</button></div>
+  </div>
+</section>
+
+<!-- 16. Contact -->
+<section id="contact" class="py-5 bg-white">
+  <div class="container"><h2 class="section-title text-center">Get in touch</h2>
+    <div class="row g-4 mt-3"><div class="col-lg-6"><input class="form-control mb-3" placeholder="Name"><input class="form-control mb-3" placeholder="Email"><textarea class="form-control mb-3" rows="4" placeholder="Message"></textarea><button class="btn btn-primary px-5">Send</button></div>
+      <div class="col-lg-6"><img src="https://placehold.co/600x300/0F172A/FFFFFF?text=Google+Map" class="img-fluid rounded-4" alt="map"><div class="d-flex gap-3 mt-3"><i class="bi bi-geo-alt fs-4"></i><span>123 Design St, NY</span></div><div><i class="bi bi-envelope fs-4 me-2"></i>hello@premium.com</div></div></div>
+  </div>
+</section>
+
+<!-- 17. Footer -->
+<footer class="footer py-5">
+  <div class="container"><div class="row g-4"><div class="col-md-4"><h5 class="text-white">Premium</h5><p>Modern UI/UX template for any industry.</p><div><a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a><a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a><a href="#" class="social-icon"><i class="bi bi-youtube"></i></a></div></div>
+    <div class="col-md-2"><h6 class="text-white">Quick links</h6><a href="#">About</a><br><a href="#">Services</a><br><a href="#">Pricing</a></div>
+    <div class="col-md-2"><h6 class="text-white">Resources</h6><a href="#">Blog</a><br><a href="#">Docs</a><br><a href="#">Support</a></div>
+    <div class="col-md-4"><h6 class="text-white">Subscribe</h6><div class="input-group"><input type="email" class="form-control" placeholder="Email"><button class="btn btn-primary">→</button></div></div>
+  </div><hr class="border-secondary"><p class="text-center text-secondary small">© 2025 Premium. All rights reserved.</p></div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Counter animation script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200;
+    counters.forEach(counter => {
+      const updateCounter = () => {
+        const target = +counter.getAttribute('data-count');
+        const current = +counter.innerText;
+        const inc = Math.ceil(target / speed);
+        if(current < target) {
+          counter.innerText = current + inc;
+          setTimeout(updateCounter, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCounter();
+    });
+  });
+</script>
+</body>
+</html> Layout 6: Minimalist UI/UX Designer ei section e add koro 
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-08-01T17:05:52+06:00.
+
+The user's current state is as follows:
+Active Document: c:\xampp\htdocs\multi-layer-portfolio\resources\views\frontend\templates\layout6_designer\index.blade.php (LANGUAGE_BLADE)
+Cursor is on line: 1
+Other open documents:
+- c:\xampp\htdocs\multi-layer-portfolio\resources\views\frontend\templates\layout6_designer\index.blade.php (LANGUAGE_BLADE)
+- c:\xampp\htdocs\multi-layer-portfolio\resources\views\frontend\templates\layout2_doctor\index.blade.php (LANGUAGE_BLADE)
+- c:\xampp\htdocs\multi-layer-portfolio\resources\views\frontend\templates\layout5_advocate\index.blade.php (LANGUAGE_BLADE)
+</ADDITIONAL_METADATA>

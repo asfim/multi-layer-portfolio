@@ -1,20 +1,98 @@
 @extends('frontend.layouts.app')
 
+@push('styles')
+<style>
+    @media (max-width: 991.98px) {
+        .navbar-collapse {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+        .display-3 {
+            font-size: 2.5rem;
+        }
+    }
+    @media (max-width: 991.98px) {
+        .dark .navbar-collapse {
+            background: #1e293b;
+        }
+    }
+    .max-w-2xl {
+        max-width: 600px;
+    }
+    .navbar-academic {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+        transition: all 0.3s ease;
+    }
+    .dark .navbar-academic {
+        background-color: #1e293b !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+    .navbar-academic .nav-link {
+        color: #1e293b !important;
+    }
+    .dark .navbar-academic .nav-link {
+        color: #f1f5f9 !important;
+    }
+    .navbar-academic .nav-link:hover, .dark .navbar-academic .nav-link:hover {
+        color: #8b5cf6 !important;
+    }
+    .toggler-icon {
+        color: #1e293b;
+    }
+    .dark .toggler-icon {
+        color: #ffffff;
+    }
+
+    /* Dark Mode Global Support */
+    .dark body {
+        background-color: #0b0f19 !important;
+        color: #cbd5e1 !important;
+    }
+    .dark .text-dark, .dark h1, .dark h2, .dark h3, .dark h4, .dark .navbar-brand {
+        color: #ffffff !important;
+    }
+    .dark .bg-white, .dark .bg-light {
+        background-color: #1e293b !important;
+        color: #cbd5e1 !important;
+    }
+    .dark .border, .dark .border-start {
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    .dark #hero {
+        background-color: #0f172a !important;
+    }
+    .dark #education, .dark #skills, .dark #projects, .dark #blog {
+        background-color: #0b0f19 !important;
+    }
+    .dark .timeline-item {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Academic Navbar -->
-<nav class="navbar navbar-expand-lg fixed-top bg-white py-3 px-4 shadow-sm">
+<nav class="navbar navbar-expand-lg fixed-top navbar-academic py-3 px-4 shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-extrabold fs-4" href="#" style="color: #8b5cf6;">
             <i class="fa-solid fa-graduation-cap me-2"></i> {{ $portfolio->full_name }}
         </a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navAcademic">
-            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-bars toggler-icon"></i>
         </button>
         <div class="collapse navbar-collapse" id="navAcademic">
             <ul class="navbar-nav ms-auto gap-3">
                 @foreach($sections as $sec)
                     <li class="nav-item">
-                        <a href="#{{ $sec->key }}" class="nav-link fw-semibold text-dark hover-purple" style="transition: 0.3s;" onmouseover="this.style.color='#8b5cf6'" onmouseout="this.style.color=''">{{ $sec->name }}</a>
+                        <a href="#{{ $sec->key }}" class="nav-link fw-semibold" style="transition: 0.3s;">{{ $sec->name }}</a>
                     </li>
                 @endforeach
             </ul>

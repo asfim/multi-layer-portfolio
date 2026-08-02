@@ -344,6 +344,53 @@
         left: 0;
         right: 0;
     }
+    .dark .navbar-collapse {
+        background: var(--navy);
+    }
+  }
+  @media (max-width: 575px){
+    .hero-title{font-size: 2rem;}
+  }
+
+  /* Dark Mode support */
+  .dark body {
+    background: #0b0f19 !important;
+    color: #f1f5f9 !important;
+  }
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark .brand-name {
+    color: #ffffff !important;
+  }
+  .dark .navbar-custom {
+    background: #0b0f19 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  }
+  .dark .nav-link-custom {
+    color: #cbd5e1 !important;
+  }
+  .dark .btn-outline-custom {
+    background: transparent !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .dark .service-card, .dark .trust-card {
+    background: #1e293b !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    color: #cbd5e1 !important;
+  }
+  .dark .service-card h5, .dark .trust-card .num, .dark .exp-badge .num {
+    color: #ffffff !important;
+  }
+  .dark .hero-role, .dark .about-list li {
+    color: #cbd5e1 !important;
+  }
+  .dark .hero-section {
+    background: linear-gradient(180deg, #101c30 0%, #0b0f19 100%) !important;
+  }
+  .dark .bg-light {
+    background-color: #111827 !important;
+  }
+  .dark .navbar-toggler {
+    filter: invert(1);
   }
 </style>
 
@@ -593,5 +640,50 @@
     </div>
   </div>
 </section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer py-5 mt-5" style="background-color: var(--navy); color: #fff;">
+  <div class="container">
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="logo-badge" style="width: 36px; height: 36px; font-size: 16px;"><i class="fa-solid fa-heart-pulse"></i></div>
+                <div class="fw-bold fs-5">Dr. {{ $portfolio->full_name }}</div>
+            </div>
+            <p style="color: #a0aec0; font-size: 0.95rem;">{{ $portfolio->short_bio }}</p>
+            <div class="d-flex gap-3 mt-4">
+                @if(isset($siteSettings) && $siteSettings->facebook_url) <a href="{{ $siteSettings->facebook_url }}" style="color: #cbd5e1; font-size: 1.2rem;"><i class="fa-brands fa-facebook"></i></a> @endif
+                @if(isset($siteSettings) && $siteSettings->twitter_url) <a href="{{ $siteSettings->twitter_url }}" style="color: #cbd5e1; font-size: 1.2rem;"><i class="fa-brands fa-twitter"></i></a> @endif
+                @if(isset($siteSettings) && $siteSettings->linkedin_url) <a href="{{ $siteSettings->linkedin_url }}" style="color: #cbd5e1; font-size: 1.2rem;"><i class="fa-brands fa-linkedin"></i></a> @endif
+            </div>
+        </div>
+        <div class="col-lg-2 offset-lg-1">
+            <h5 class="mb-4 fs-6 text-uppercase" style="letter-spacing: 1px; color: #e2e8f0;">Quick Links</h5>
+            <ul class="list-unstyled">
+                <li class="mb-3"><a href="#hero" style="color: #a0aec0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">Home</a></li>
+                <li class="mb-3"><a href="#about" style="color: #a0aec0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">About Me</a></li>
+                <li class="mb-3"><a href="#services" style="color: #a0aec0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">Services</a></li>
+                <li class="mb-3"><a href="#booking" style="color: #a0aec0; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0aec0'">Contact</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-4 offset-lg-1">
+            <h5 class="mb-4 fs-6 text-uppercase" style="letter-spacing: 1px; color: #e2e8f0;">Contact Info</h5>
+            <ul class="list-unstyled" style="color: #a0aec0;">
+                @if(isset($siteSettings) && $siteSettings->contact_email)
+                <li class="mb-3 d-flex align-items-center gap-3"><i class="fa-solid fa-envelope" style="color: var(--blue-500);"></i> {{ $siteSettings->contact_email }}</li>
+                @endif
+                @if(isset($siteSettings) && $siteSettings->contact_phone)
+                <li class="mb-3 d-flex align-items-center gap-3"><i class="fa-solid fa-phone" style="color: var(--blue-500);"></i> {{ $siteSettings->contact_phone }}</li>
+                @endif
+                <li class="mb-3 d-flex align-items-center gap-3"><i class="fa-solid fa-location-dot" style="color: var(--blue-500);"></i> {{ $siteSettings->contact_address ?? 'Medical Center, City' }}</li>
+            </ul>
+        </div>
+    </div>
+    <hr style="border-color: rgba(255,255,255,0.1); margin: 40px 0 20px;">
+    <div class="text-center" style="color: #a0aec0; font-size: 0.9rem;">
+        &copy; {{ date('Y') }} Dr. {{ $portfolio->full_name }}. All rights reserved.
+    </div>
+  </div>
+</footer>
 
 @endsection

@@ -111,6 +111,22 @@
         50% { transform: translateY(-10px); }
         100% { transform: translateY(0px); }
     }
+
+    @media (max-width: 991px) {
+        .navbar-st .navbar-collapse {
+            background: rgba(3, 0, 20, 0.95);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .display-3 {
+            font-size: 2.5rem;
+        }
+    }
+    .max-w-2xl {
+        max-width: 600px;
+    }
 </style>
 
 <!-- Engineering Header -->

@@ -1,5 +1,51 @@
 @extends('frontend.layouts.app')
 
+@push('styles')
+<style>
+    @media (max-width: 991.98px) {
+        .navbar-collapse {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .display-3 {
+            font-size: 2.5rem;
+        }
+        .hero-img-wrap {
+            margin-top: 2rem;
+        }
+    }
+    @media (max-width: 991.98px) {
+        .dark .navbar-collapse {
+            background: rgba(15, 23, 42, 0.95);
+        }
+    }
+    pre {
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    .navbar .nav-link {
+        color: #1e293b !important;
+    }
+    .dark .navbar .nav-link {
+        color: #f1f5f9 !important;
+    }
+    .navbar .nav-link:hover {
+        color: var(--primary-color) !important;
+    }
+    .toggler-icon {
+        color: #1e293b;
+    }
+    .dark .toggler-icon {
+        color: #ffffff;
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top glass-card py-3 px-4 mx-3 mt-3">
@@ -8,13 +54,13 @@
             <i class="fa-solid fa-code me-2"></i> {{ $portfolio->full_name }}
         </a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <i class="fa-solid fa-bars text-white fs-4"></i>
+            <i class="fa-solid fa-bars fs-4 toggler-icon"></i>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto gap-3">
                 @foreach($sections as $sec)
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-bold" href="#{{ $sec->key }}">{{ $sec->name }}</a>
+                        <a class="nav-link fw-bold" href="#{{ $sec->key }}">{{ $sec->name }}</a>
                     </li>
                 @endforeach
             </ul>
